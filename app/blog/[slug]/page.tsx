@@ -1,15 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, HomeIcon, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function PostPage({ params }: PostPageProps) {
-  const { slug } = await params;
+async function PostContent({ slug }: { slug: string }) {
   const supabase = await createClient();
 
   const { data: post, error } = await supabase
@@ -84,6 +84,16 @@ export default async function PostPage({ params }: PostPageProps) {
         </div>
       </article>
     </div>
+  );
+}
+
+export default async function PostPage({ params }: PostPageProps) {
+  const { slug } = await params;
+
+  return (
+    <Suspense fallback={<div className="flex-1 w-full max-w-3xl mx-auto py-12 px-4 text-center">Loading post...</div>}>
+      <PostContent slug={slug} />
+    </Suspense>
   );
 }
 

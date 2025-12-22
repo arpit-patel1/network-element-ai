@@ -1,15 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, HomeIcon, EditIcon } from "lucide-react";
+import { ArrowLeft, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Suspense } from "react";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
 }
 
-async function PostContent({ slug }: { slug: string }) {
+export default async function PostPage({ params }: PostPageProps) {
+  const { slug } = await params;
   const supabase = await createClient();
 
   const { data: post, error } = await supabase
@@ -29,24 +29,15 @@ async function PostContent({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8 max-w-3xl mx-auto py-12 px-4">
+    <div className="flex-1 w-full flex flex-col gap-8 max-w-3xl mx-auto py-12">
       <div className="flex justify-between items-center w-full">
-        <div className="flex gap-4">
-          <Link
-            href="/blog"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
-          >
-            <ArrowLeft size={16} />
-            Back to blog
-          </Link>
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
-          >
-            <HomeIcon size={16} />
-            Home
-          </Link>
-        </div>
+        <Link
+          href="/blog"
+          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
+        >
+          <ArrowLeft size={16} />
+          Back to blog
+        </Link>
         
         {post.author_id === user?.id && (
           <Button variant="outline" size="sm" asChild>
@@ -86,14 +77,3 @@ async function PostContent({ slug }: { slug: string }) {
     </div>
   );
 }
-
-export default async function PostPage({ params }: PostPageProps) {
-  const { slug } = await params;
-
-  return (
-    <Suspense fallback={<div className="flex-1 w-full max-w-3xl mx-auto py-12 px-4 text-center">Loading post...</div>}>
-      <PostContent slug={slug} />
-    </Suspense>
-  );
-}
-

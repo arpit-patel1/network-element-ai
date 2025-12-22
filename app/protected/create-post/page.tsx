@@ -17,6 +17,7 @@ export default async function CreatePostPage() {
   async function createPost(formData: FormData) {
     "use server";
 
+    const userId = formData.get("userId") as string;
     const title = formData.get("title") as string;
     const subtitle = formData.get("subtitle") as string;
     const content = formData.get("content") as string;
@@ -50,7 +51,7 @@ export default async function CreatePostPage() {
       slug,
       tags: tags,
       is_published: true, // Auto-publish on create
-      author_id: user?.id,
+      author_id: userId,
       enhancement_status: 'enhancing', // Will be updated to 'enhanced' by webhook
     });
 
@@ -68,6 +69,7 @@ export default async function CreatePostPage() {
   return (
     <div className="flex-1 w-full">
       <form action={createPost}>
+        <input type="hidden" name="userId" value={user.id} />
         <ModernEditor
           titleName="title"
           subtitleName="subtitle"

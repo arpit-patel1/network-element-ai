@@ -37,6 +37,8 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   async function updatePost(formData: FormData) {
     "use server";
 
+    const postId = formData.get("postId") as string;
+    const postSlug = formData.get("postSlug") as string;
     const title = formData.get("title") as string;
     const subtitle = formData.get("subtitle") as string;
     const content = formData.get("content") as string;
@@ -46,7 +48,7 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
     // Validate required fields
     if (!title || !content) {
       console.error("Title and content are required");
-      return { error: "Title and content are required" };
+      return;
     }
     
     // Optional: Update slug if title changes, but often better to keep original slug for SEO
@@ -63,23 +65,25 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
         is_published: true, // Auto-publish on update
         enhancement_status: 'enhancing', // Reset to enhancing when manually edited
       })
-      .eq("id", post.id);
+      .eq("id", postId);
 
     if (error) {
       console.error("Error updating post:", error);
-      return { error: error.message };
+      return;
     }
 
     // Invalidate cache so pages show fresh data
     revalidatePath("/blog");
-    revalidatePath(`/blog/${post.slug}`);
+    revalidatePath(`/blog/${postSlug}`);
     revalidatePath("/protected");
-    redirect(`/blog/${post.slug}`);
+    redirect(`/blog/${postSlug}`);
   }
 
   return (
     <div className="flex-1 w-full">
       <form action={updatePost}>
+        <input type="hidden" name="postId" value={post.id} />
+        <input type="hidden" name="postSlug" value={post.slug} />
         <ModernEditor
           titleName="title"
           subtitleName="subtitle"

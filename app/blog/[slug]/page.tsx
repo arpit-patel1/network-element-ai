@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { ArrowLeft, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,22 +33,26 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
-  async function deletePost() {
+  async function deletePost(formData: FormData) {
     "use server";
 
+    const postId = formData.get("postId") as string;
     const supabase = await createClient();
     
     // RLS policies will ensure only the author can delete
     const { error } = await supabase
       .from("posts")
       .delete()
-      .eq("id", post.id);
+      .eq("id", postId);
 
     if (error) {
       console.error("Error deleting post:", error);
       return;
     }
 
+    // Invalidate cache
+    revalidatePath("/blog");
+    revalidatePath("/protected");
     redirect("/blog");
   }
 
@@ -71,6 +76,7 @@ export default async function PostPage({ params }: PostPageProps) {
               </Link>
             </Button>
             <form action={deletePost}>
+              <input type="hidden" name="postId" value={post.id} />
               <DeletePostButton variant="destructive" size="sm" showLabel={true} />
             </form>
           </div>

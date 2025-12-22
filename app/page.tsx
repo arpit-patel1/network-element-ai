@@ -1,13 +1,11 @@
-import { DeployButton } from "@/components/deploy-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
+import { BookOpen, CheckSquare, Code2 } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 export default function Home() {
   return (
@@ -16,40 +14,97 @@ export default function Home() {
         <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
           <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
             <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
+              <Link href={"/"} className="text-lg">My Playground</Link>
               <Link href={"/blog"} className="hover:text-primary transition-colors">Blog</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
             </div>
             {!hasEnvVars ? (
               <EnvVarWarning />
             ) : (
-              <Suspense>
+              <Suspense fallback={<div className="h-8 w-20 bg-muted animate-pulse rounded" />}>
                 <AuthButton />
               </Suspense>
             )}
           </div>
         </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          <Hero />
-          <main className="flex-1 flex flex-col gap-6 px-4">
-            <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
+        
+        <div className="flex-1 flex flex-col gap-16 max-w-5xl p-5 w-full">
+          {/* Hero Section */}
+          <div className="flex flex-col gap-8 items-center text-center py-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+              <Code2 size={16} />
+              Personal Projects Playground
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+              Welcome to My Playground
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl">
+              A collection of projects built with Next.js, Supabase, and modern web technologies.
+              Experimenting, learning, and building in public.
+            </p>
+          </div>
+
+          {/* Projects Grid */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <Link href="/blog">
+              <Card className="hover:border-primary/50 transition-all hover:shadow-md h-full">
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <BookOpen className="text-primary" size={24} />
+                    </div>
+                    <CardTitle>Blog</CardTitle>
+                  </div>
+                  <CardDescription>
+                    Thoughts, tutorials, and learnings about web development, programming, and technology.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    ✨ Full CRUD operations • 🔒 Row Level Security • 📝 Draft support
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Card className="border-dashed opacity-60 h-full">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 bg-muted rounded-lg">
+                    <CheckSquare className="text-muted-foreground" size={24} />
+                  </div>
+                  <CardTitle className="text-muted-foreground">Todo App</CardTitle>
+                </div>
+                <CardDescription>
+                  Task management application with categories, priorities, and real-time updates.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground italic">
+                  Coming soon...
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Tech Stack */}
+          <div className="flex flex-col gap-6 items-center py-8">
+            <h2 className="text-2xl font-semibold">Built With</h2>
+            <div className="flex flex-wrap gap-4 justify-center">
+              {["Next.js 16", "React 19", "TypeScript", "Supabase", "Tailwind CSS", "shadcn/ui"].map((tech) => (
+                <div
+                  key={tech}
+                  className="px-4 py-2 rounded-lg bg-accent text-sm font-medium"
+                >
+                  {tech}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
+          <p className="text-muted-foreground">
+            Built with ❤️ using modern web technologies
           </p>
           <ThemeSwitcher />
         </footer>

@@ -8,7 +8,9 @@ A collection of personal projects and experiments built with Next.js, Supabase, 
 A full-featured blog platform with:
 - ✨ Full CRUD operations (Create, Read, Update, Delete)
 - 🔒 Row Level Security (RLS) with Supabase
-- 📝 Draft support for unpublished posts
+- 📝 Modern rich text editor with formatting toolbar
+- 🏷️ Subtitle and tag support for better organization
+- ✍️ Real-time markdown preview
 - 🎨 Beautiful UI with shadcn/ui components
 - 👤 User authentication and authorization
 
@@ -52,11 +54,16 @@ create table posts (
   id uuid primary key default gen_random_uuid(),
   created_at timestamp with time zone default now(),
   title text not null,
+  subtitle text,
   content text not null,
   slug text unique not null,
+  tags text[] default '{}',
   author_id uuid references auth.users not null default auth.uid(),
   is_published boolean default false
 );
+
+-- Create an index on tags for better query performance
+create index posts_tags_idx on posts using gin (tags);
 
 -- Enable RLS
 alter table posts enable row level security;
@@ -82,6 +89,14 @@ create policy "Allow authors to update their own posts"
 create policy "Allow authors to delete their own posts"
   on posts for delete
   using (auth.uid() = author_id);
+```
+
+### Migrating Existing Database
+
+If you already have a posts table, run the migration script:
+
+```bash
+# Run the SQL commands in supabase-migration.sql in your Supabase SQL Editor
 ```
 
 ## 📝 Features

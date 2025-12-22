@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { DeletePostButton } from "@/components/delete-post-button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -77,20 +78,55 @@ export default async function PostPage({ params }: PostPageProps) {
       </div>
 
       <article className="flex flex-col gap-6">
-        <header className="flex flex-col gap-2">
-          <div className="flex items-center gap-3">
+        <header className="flex flex-col gap-4">
+          <div className="flex items-center gap-3 flex-wrap">
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
               {post.title}
             </h1>
-            {!post.is_published && (
-              <span className="bg-primary/10 text-primary text-xs uppercase font-bold px-2 py-1 rounded">
-                Draft
-              </span>
+            <div className="flex items-center gap-2">
+              {!post.is_published && (
+                <span className="bg-primary/10 text-primary text-xs uppercase font-bold px-2 py-1 rounded">
+                  Draft
+                </span>
+              )}
+              {post.enhancement_status === 'enhancing' && (
+                <span className="bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs uppercase font-bold px-2 py-1 rounded flex items-center gap-1">
+                  <span className="animate-pulse">⚡</span>
+                  Enhancing
+                </span>
+              )}
+              {post.enhancement_status === 'enhanced' && (
+                <span className="bg-green-500/10 text-green-600 dark:text-green-400 text-xs uppercase font-bold px-2 py-1 rounded flex items-center gap-1">
+                  ✨ Enhanced
+                </span>
+              )}
+            </div>
+          </div>
+          
+          {post.subtitle && (
+            <p className="text-xl text-muted-foreground">
+              {post.subtitle}
+            </p>
+          )}
+
+          <div className="flex items-center gap-3 flex-wrap">
+            <p className="text-sm text-muted-foreground">
+              Published on {new Date(post.created_at).toLocaleDateString()}
+            </p>
+            
+            {post.tags && post.tags.length > 0 && (
+              <>
+                <span className="text-muted-foreground">•</span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {post.tags.map((tag: string) => (
+                    <Badge key={tag} variant="secondary">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </>
             )}
           </div>
-          <p className="text-muted-foreground">
-            Published on {new Date(post.created_at).toLocaleDateString()}
-          </p>
         </header>
 
         <div className="prose prose-neutral dark:prose-invert max-w-none">

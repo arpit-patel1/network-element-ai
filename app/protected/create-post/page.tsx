@@ -1,10 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { FormCheckbox } from "@/components/ui/form-checkbox";
-import { MarkdownEditor } from "@/components/markdown-editor";
+import { revalidatePath } from "next/cache";
+import { ModernEditor } from "@/components/modern-editor";
 
 export default async function CreatePostPage() {
   const supabase = await createClient();
@@ -21,20 +18,40 @@ export default async function CreatePostPage() {
     "use server";
 
     const title = formData.get("title") as string;
+    const subtitle = formData.get("subtitle") as string;
     const content = formData.get("content") as string;
-    const isPublished = formData.get("is_published") === "on";
-    const slug = title
+    const tagsJson = formData.get("tags") as string;
+    const tags = tagsJson ? JSON.parse(tagsJson) : [];
+    
+    // Generate base slug
+    let slug = title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)+/g, "");
 
     const supabase = await createClient();
+    
+    // Check if slug exists and make it unique
+    const { data: existingPost } = await supabase
+      .from("posts")
+      .select("slug")
+      .eq("slug", slug)
+      .single();
+    
+    if (existingPost) {
+      // Append timestamp to make it unique
+      slug = `${slug}-${Date.now()}`;
+    }
+
     const { error } = await supabase.from("posts").insert({
       title,
+      subtitle: subtitle || null,
       content,
       slug,
-      is_published: isPublished,
+      tags: tags,
+      is_published: true, // Auto-publish on create
       author_id: user?.id,
+      enhancement_status: 'enhancing', // Will be updated to 'enhanced' by webhook
     });
 
     if (error) {
@@ -42,48 +59,21 @@ export default async function CreatePostPage() {
       return;
     }
 
+    // Invalidate cache so the blog page shows fresh data
+    revalidatePath("/blog");
+    revalidatePath("/protected");
     redirect("/blog");
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8 max-w-4xl mx-auto py-12 px-4">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold">Create New Post</h1>
-        <p className="text-muted-foreground">
-          Write something amazing and share it with the world.
-        </p>
-      </div>
-
-      <form action={createPost} className="flex flex-col gap-6">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="title">Title</Label>
-          <Input
-            id="title"
-            name="title"
-            placeholder="Enter post title"
-            required
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="content">Content (Markdown supported)</Label>
-          <MarkdownEditor name="content" required />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <FormCheckbox
-            id="is_published"
-            name="is_published"
-          />
-          <Label htmlFor="is_published">Publish immediately</Label>
-        </div>
-
-        <div className="flex gap-4">
-          <Button type="submit">Create Post</Button>
-          <Button variant="outline" asChild>
-            <a href="/protected">Cancel</a>
-          </Button>
-        </div>
+    <div className="flex-1 w-full">
+      <form action={createPost}>
+        <ModernEditor
+          titleName="title"
+          subtitleName="subtitle"
+          contentName="content"
+          tagsName="tags"
+        />
       </form>
     </div>
   );

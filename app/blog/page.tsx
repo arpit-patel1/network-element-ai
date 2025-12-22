@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
+import { BlogListRealtime } from "@/components/blog-list-realtime";
 
 export default async function BlogPage() {
   const supabase = await createClient();
@@ -52,38 +52,7 @@ export default async function BlogPage() {
         </Button>
       </div>
 
-      <div className="grid gap-6">
-        {!posts || posts.length === 0 ? (
-          <div className="text-center py-12 border rounded-lg bg-accent/20">
-            <p className="text-muted-foreground">No posts found yet.</p>
-          </div>
-        ) : (
-          posts.map((post) => (
-            <Link key={post.id} href={`/blog/${post.slug}`}>
-              <Card className={`hover:bg-accent/50 transition-colors ${!post.is_published ? 'border-dashed border-primary/50' : ''}`}>
-                <CardHeader className="flex flex-row items-start justify-between space-y-0">
-                  <div className="flex flex-col gap-1">
-                    <CardTitle>{post.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(post.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                  {!post.is_published && (
-                    <div className="bg-primary/10 text-primary text-[10px] uppercase font-bold px-2 py-1 rounded">
-                      Draft
-                    </div>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  <p className="line-clamp-3 text-muted-foreground">
-                    {post.content.substring(0, 150)}...
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
-          ))
-        )}
-      </div>
+      <BlogListRealtime initialPosts={posts || []} userId={user?.id} />
     </div>
   );
 }

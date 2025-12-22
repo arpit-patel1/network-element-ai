@@ -1,0 +1,67 @@
+---
+title: UI Design & Component Standards
+description: Enforces shadcn/ui and Next.js App Router best practices
+alwaysApply: true
+---
+
+# UI Design & Component Standards
+
+**Core Principle**: If a shadcn/ui component exists for a UI need, using anything else is considered an error.
+
+## UI & Frontend Rules
+
+- **Always use shadcn/ui components** for UI primitives
+- Prefer components from `@/components/ui/*` (Button, Card, Input, Form, Dialog, Table, Tabs, DropdownMenu, etc)
+- **DO NOT write raw HTML UI elements** if a shadcn/ui component exists (e.g., no `<button>`, use `<Button>`)
+- **Styling**: Use Tailwind CSS utility classes only
+- **No inline styles** or CSS modules
+- Follow shadcn/ui composition patterns and variants
+- Use `cn()` utility when combining Tailwind classes
+- Keep components accessible (Radix-based defaults)
+
+## Next.js Rules
+
+- **Use Next.js App Router only** (not Pages Router)
+- Use file-based routing under `/app`
+- **Use Server Components by default**
+- Add `"use client"` directive only when needed:
+  - Forms with state
+  - Dialogs and modals
+  - Interactive components with `useState`, `useEffect`, event handlers
+  - Client-side hooks
+- Keep data fetching in Server Components when possible
+- Use Client Components only for interactivity
+
+## Component Structure
+
+- **Reusable UI primitives** → `/components/ui`
+- **App-specific components** → `/components`
+- **Pages & layouts** → `/app`
+- **No business logic inside UI primitives**
+- Keep components small and composable
+- Follow single responsibility principle
+
+## Forms & Actions
+
+- Use shadcn/ui Form components with `react-hook-form` or server actions
+- **All buttons** must use shadcn `<Button>` component with appropriate variants
+- **All inputs** must use shadcn components: `<Input>`, `<Textarea>`, `<Select>`, etc
+- Leverage Zod for form validation
+- Use server actions for form submissions when possible
+
+## Code Quality
+
+- **Use TypeScript everywhere** (no `.js` or `.jsx` files)
+- Type props, state, and function parameters explicitly
+- Avoid unnecessary abstractions
+- Prefer clarity over cleverness
+- Follow existing project patterns
+- Use consistent naming conventions
+- Keep files focused and modular
+
+## Default Assumptions
+
+- Tailwind CSS is installed and configured
+- shadcn/ui is already initialized
+- TypeScript is configured
+- App Router is in use

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FormCheckbox } from "@/components/ui/form-checkbox";
 import { MarkdownEditor } from "@/components/markdown-editor";
 
 export default async function CreatePostPage() {
@@ -70,11 +71,9 @@ export default async function CreatePostPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
+          <FormCheckbox
             id="is_published"
             name="is_published"
-            className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
           />
           <Label htmlFor="is_published">Publish immediately</Label>
         </div>

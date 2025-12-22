@@ -27,10 +27,42 @@ export function BlogListRealtime({
   userId: string | undefined;
 }) {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const supabase = createClient();
   
   console.log("🎨 BlogListRealtime rendering with", posts.length, "posts");
+
+  // Fetch fresh data on mount to ensure we have the latest posts
+  useEffect(() => {
+    const fetchLatestPosts = async () => {
+      setIsRefreshing(true);
+      try {
+        let query = supabase
+          .from("posts")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (userId) {
+          query = query.or(`is_published.eq.true,author_id.eq.${userId}`);
+        } else {
+          query = query.eq("is_published", true);
+        }
+
+        const { data, error } = await query;
+        
+        if (!error && data) {
+          console.log("🔄 Refreshed posts, found:", data.length);
+          setPosts(data);
+        }
+      } catch (error) {
+        console.error("❌ Error fetching latest posts:", error);
+      } finally {
+        setIsRefreshing(false);
+      }
+    };
+
+    fetchLatestPosts();
+  }, [supabase, userId]);
 
   useEffect(() => {
     // Subscribe to realtime changes
@@ -52,7 +84,6 @@ export function BlogListRealtime({
             if (newPost.is_published || newPost.author_id === userId) {
               console.log("✅ Adding new post to list:", newPost.title);
               setPosts((current) => [newPost, ...current]);
-              setLastUpdate(new Date());
             }
           } else if (payload.eventType === "UPDATE") {
             const updatedPost = payload.new as Post;
@@ -75,13 +106,11 @@ export function BlogListRealtime({
               console.log("✨ Updated posts array length:", newPosts.length);
               return newPosts;
             });
-            setLastUpdate(new Date());
           } else if (payload.eventType === "DELETE") {
             console.log("✅ Removing post from list");
             setPosts((current) =>
               current.filter((post) => post.id !== payload.old.id)
             );
-            setLastUpdate(new Date());
           }
         }
       )
@@ -102,6 +131,13 @@ export function BlogListRealtime({
   }, [supabase, userId]);
 
   if (!posts || posts.length === 0) {
+    if (isRefreshing) {
+      return (
+        <div className="text-center py-12 border rounded-lg bg-accent/20">
+          <p className="text-muted-foreground">Loading posts...</p>
+        </div>
+      );
+    }
     return (
       <div className="text-center py-12 border rounded-lg bg-accent/20">
         <p className="text-muted-foreground">No posts found yet.</p>
@@ -111,11 +147,6 @@ export function BlogListRealtime({
 
   return (
     <div className="grid gap-6">
-      {lastUpdate && (
-        <div className="text-xs text-muted-foreground text-center py-2 bg-green-500/10 rounded border border-green-500/20">
-          ✨ Last updated: {lastUpdate.toLocaleTimeString()}
-        </div>
-      )}
       {posts.map((post) => (
         <Link key={post.id} href={`/blog/${post.slug}`}>
           <Card className={`hover:bg-accent/50 transition-colors ${!post.is_published ? 'border-dashed border-primary/50' : ''}`}>

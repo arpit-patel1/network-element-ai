@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { MarkdownEditor } from "@/components/markdown-editor";
 
 export default async function CreatePostPage() {
   const supabase = await createClient();
@@ -45,7 +45,7 @@ export default async function CreatePostPage() {
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8 max-w-2xl mx-auto py-12 px-4">
+    <div className="flex-1 w-full flex flex-col gap-8 max-w-4xl mx-auto py-12 px-4">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold">Create New Post</h1>
         <p className="text-muted-foreground">
@@ -65,14 +65,8 @@ export default async function CreatePostPage() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="content">Content</Label>
-          <Textarea
-            id="content"
-            name="content"
-            placeholder="Write your post content here..."
-            className="min-h-[200px]"
-            required
-          />
+          <Label htmlFor="content">Content (Markdown supported)</Label>
+          <MarkdownEditor name="content" required />
         </div>
 
         <div className="flex items-center gap-2">

@@ -3,7 +3,8 @@ import { notFound, redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { MarkdownEditor } from "@/components/markdown-editor";
+import { DeletePostButton } from "@/components/delete-post-button";
 
 interface EditPostPageProps {
   params: Promise<{ slug: string }>;
@@ -64,8 +65,27 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
     redirect(`/blog/${post.slug}`);
   }
 
+  async function deletePost() {
+    "use server";
+
+    const supabase = await createClient();
+    
+    // RLS policies will ensure only the author can delete
+    const { error } = await supabase
+      .from("posts")
+      .delete()
+      .eq("id", post.id);
+
+    if (error) {
+      console.error("Error deleting post:", error);
+      return;
+    }
+
+    redirect("/blog");
+  }
+
   return (
-    <div className="flex-1 w-full flex flex-col gap-8 max-w-2xl mx-auto py-12 px-4">
+    <div className="flex-1 w-full flex flex-col gap-8 max-w-4xl mx-auto py-12 px-4">
       <div className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold">Edit Post</h1>
         <p className="text-muted-foreground">
@@ -85,14 +105,8 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="content">Content</Label>
-          <Textarea
-            id="content"
-            name="content"
-            defaultValue={post.content}
-            className="min-h-[300px]"
-            required
-          />
+          <Label htmlFor="content">Content (Markdown supported)</Label>
+          <MarkdownEditor name="content" defaultValue={post.content} required />
         </div>
 
         <div className="flex items-center gap-2">
@@ -113,6 +127,16 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
           </Button>
         </div>
       </form>
+
+      <div className="border-t pt-6 mt-6">
+        <h2 className="text-xl font-semibold text-destructive mb-4">Danger Zone</h2>
+        <p className="text-sm text-muted-foreground mb-4">
+          Once you delete a post, there is no going back. Please be certain.
+        </p>
+        <form action={deletePost}>
+          <DeletePostButton showLabel={true} />
+        </form>
+      </div>
     </div>
   );
 }

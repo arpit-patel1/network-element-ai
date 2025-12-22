@@ -1,8 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DeletePostButton } from "@/components/delete-post-button";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -28,6 +31,25 @@ export default async function PostPage({ params }: PostPageProps) {
     notFound();
   }
 
+  async function deletePost() {
+    "use server";
+
+    const supabase = await createClient();
+    
+    // RLS policies will ensure only the author can delete
+    const { error } = await supabase
+      .from("posts")
+      .delete()
+      .eq("id", post.id);
+
+    if (error) {
+      console.error("Error deleting post:", error);
+      return;
+    }
+
+    redirect("/blog");
+  }
+
   return (
     <div className="flex-1 w-full flex flex-col gap-8 max-w-3xl mx-auto py-12">
       <div className="flex justify-between items-center w-full">
@@ -40,12 +62,17 @@ export default async function PostPage({ params }: PostPageProps) {
         </Link>
         
         {post.author_id === user?.id && (
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/protected/edit-post/${post.slug}`} className="flex items-center gap-2">
-              <EditIcon size={14} />
-              Edit Post
-            </Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/protected/edit-post/${post.slug}`} className="flex items-center gap-2">
+                <EditIcon size={14} />
+                Edit Post
+              </Link>
+            </Button>
+            <form action={deletePost}>
+              <DeletePostButton variant="destructive" size="sm" showLabel={true} />
+            </form>
+          </div>
         )}
       </div>
 
@@ -67,11 +94,9 @@ export default async function PostPage({ params }: PostPageProps) {
         </header>
 
         <div className="prose prose-neutral dark:prose-invert max-w-none">
-          {post.content.split("\n").map((paragraph: string, index: number) => (
-            <p key={index} className="mb-4">
-              {paragraph}
-            </p>
-          ))}
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {post.content}
+          </ReactMarkdown>
         </div>
       </article>
     </div>

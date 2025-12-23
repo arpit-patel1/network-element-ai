@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpenCheck, Sparkles, ArrowRight, SpellCheck } from "lucide-react";
+import { BookOpenCheck, Sparkles, ArrowRight, SpellCheck, FileText } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,13 +24,13 @@ export default function ELAHomeworkPage() {
                 </span>
               </h1>
               <p className="text-muted-foreground">
-                Practice reading comprehension and spelling with instant feedback.
+                Practice reading comprehension, spelling, and writing with instant feedback.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card className="border-2 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
             <CardHeader className="space-y-3">
               <div className="flex items-center gap-3">
@@ -86,6 +86,37 @@ export default function ELAHomeworkPage() {
                 size="lg"
               >
                 <Link href="/protected/ela-homework/spelling-test" className="flex items-center gap-2">
+                  Start practicing
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
+            <CardHeader className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
+                  <FileText className="text-white" size={22} />
+                </div>
+                <div>
+                  <CardTitle className="text-purple-700 dark:text-purple-200">Paragraph Review</CardTitle>
+                  <CardDescription>Write a paragraph or story and get encouraging feedback with improvement suggestions.</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• Write your own paragraph or story.</li>
+                <li>• Get encouraging words and helpful suggestions.</li>
+                <li>• Improve your writing with easy-to-understand feedback.</li>
+              </ul>
+              <Button
+                asChild
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
+                size="lg"
+              >
+                <Link href="/protected/ela-homework/paragraph-review" className="flex items-center gap-2">
                   Start practicing
                   <ArrowRight className="w-4 h-4" />
                 </Link>

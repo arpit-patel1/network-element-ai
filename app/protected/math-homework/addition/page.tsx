@@ -123,7 +123,7 @@ export default function AdditionHomeworkPage() {
         </div>
 
         {/* Difficulty Selector */}
-        <div className="flex gap-2 items-center justify-center">
+        <div className="flex flex-wrap gap-2 items-center justify-center">
           <span className="text-sm font-medium text-muted-foreground">Difficulty:</span>
           <Button
             variant={difficulty === "easy" ? "default" : "outline"}

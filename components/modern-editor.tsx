@@ -47,13 +47,15 @@ function SubmitButton({ onClick }: { onClick?: () => boolean }) {
   
   return (
     <Button 
-      type="submit" 
+      type="submit"
+      size="sm"
       disabled={pending}
       onClick={(e) => {
         if (onClick && !onClick()) {
           e.preventDefault();
         }
       }}
+      className="flex-1 md:flex-none"
     >
       {pending ? "Publishing..." : "Publish"}
     </Button>
@@ -200,12 +202,12 @@ export function ModernEditor({
 
       {/* Toolbar */}
       <div className="border-b bg-background sticky top-0 z-10">
-        <div className="flex items-center justify-between px-6 py-3">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-thin">
             {/* Style Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-1">
+                <Button variant="ghost" size="sm" className="gap-1 shrink-0">
                   Style
                   <ChevronDown className="h-4 w-4" />
                 </Button>
@@ -226,50 +228,99 @@ export function ModernEditor({
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <div className="h-6 w-px bg-border" />
+            <div className="h-6 w-px bg-border shrink-0" />
 
-            {/* Formatting Buttons */}
-            {toolbarButtons.map((button) => (
-              <Button
-                key={button.label}
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8"
-                type="button"
-                onClick={button.action}
-                title={button.label}
-              >
-                <button.icon className="h-4 w-4" />
-              </Button>
-            ))}
+            {/* Formatting Buttons - Show only key ones on mobile */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0"
+              type="button"
+              onClick={() => insertMarkdown("**", "**")}
+              title="Bold"
+            >
+              <Bold className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0"
+              type="button"
+              onClick={() => insertMarkdown("*", "*")}
+              title="Italic"
+            >
+              <Italic className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0"
+              type="button"
+              onClick={() => insertMarkdown("[", "](url)")}
+              title="Link"
+            >
+              <Link className="h-4 w-4" />
+            </Button>
+            
+            {/* Rest of formatting buttons - hidden on mobile, shown on larger screens */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0 hidden md:inline-flex"
+              type="button"
+              onClick={() => insertMarkdown("~~", "~~")}
+              title="Strikethrough"
+            >
+              <Strikethrough className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0 hidden md:inline-flex"
+              type="button"
+              onClick={() => insertMarkdown("`", "`")}
+              title="Code"
+            >
+              <Code className="h-4 w-4" />
+            </Button>
 
-            <div className="h-6 w-px bg-border" />
+            <div className="h-6 w-px bg-border shrink-0 hidden md:block" />
 
-            {/* Button Dropdown */}
+            {/* More Tools Dropdown - contains less common formatting */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-1">
-                  Button
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => insertMarkdown("[Button Text](", ")")}>
-                  Add Button Link
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* More Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-1">
+                <Button variant="ghost" size="sm" className="gap-1 shrink-0">
                   More
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={toolbarButtons[5].action}>
+                  <Image className="h-4 w-4 mr-2" />
+                  {toolbarButtons[5].label}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={toolbarButtons[6].action}>
+                  <Video className="h-4 w-4 mr-2" />
+                  {toolbarButtons[6].label}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={toolbarButtons[7].action}>
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  {toolbarButtons[7].label}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={toolbarButtons[8].action}>
+                  <List className="h-4 w-4 mr-2" />
+                  {toolbarButtons[8].label}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={toolbarButtons[9].action}>
+                  <ListOrdered className="h-4 w-4 mr-2" />
+                  {toolbarButtons[9].label}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => insertMarkdown("[Button Text](", ")")}>
+                  <Link className="h-4 w-4 mr-2" />
+                  Add Button Link
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => insertMarkdown("```\n", "\n```")}>
+                  <Code className="h-4 w-4 mr-2" />
                   Code Block
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => insertMarkdown("---\n")}>
@@ -280,11 +331,13 @@ export function ModernEditor({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 shrink-0">
             <Button
               type="button"
               variant="outline"
+              size="sm"
               onClick={() => setShowPreview(!showPreview)}
+              className="flex-1 md:flex-none"
             >
               {showPreview ? "Edit" : "Preview"}
             </Button>
@@ -295,16 +348,16 @@ export function ModernEditor({
 
       {/* Editor Content */}
       {showPreview ? (
-        <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-12">
           {/* Preview Mode */}
           <article className="flex flex-col gap-6">
             <header className="flex flex-col gap-4">
-              <h1 className="text-5xl font-bold">
+              <h1 className="text-3xl md:text-5xl font-bold">
                 {title || "Untitled"}
               </h1>
               
               {subtitle && (
-                <p className="text-xl text-muted-foreground">
+                <p className="text-lg md:text-xl text-muted-foreground">
                   {subtitle}
                 </p>
               )}
@@ -336,14 +389,14 @@ export function ModernEditor({
           </article>
         </div>
       ) : (
-        <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="max-w-4xl mx-auto px-4 py-8 md:px-6 md:py-12">
           {/* Edit Mode */}
           {/* Title */}
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
-            className="text-5xl font-bold border-0 px-0 focus-visible:ring-0 mb-4 h-auto"
+            className="text-3xl md:text-5xl font-bold border-0 px-0 focus-visible:ring-0 mb-4 h-auto"
             required
           />
 
@@ -352,7 +405,7 @@ export function ModernEditor({
             value={subtitle}
             onChange={(e) => setSubtitle(e.target.value)}
             placeholder="Add a subtitle..."
-            className="text-xl text-muted-foreground border-0 px-0 focus-visible:ring-0 mb-8 h-auto"
+            className="text-lg md:text-xl text-muted-foreground border-0 px-0 focus-visible:ring-0 mb-8 h-auto"
           />
 
           {/* Tags */}

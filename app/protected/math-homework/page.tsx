@@ -271,11 +271,11 @@ export default function MathHomeworkPage() {
         </div>
 
         {/* Back Button and Difficulty Selector */}
-        <div className="flex items-center justify-between">
-          <Button variant="outline" onClick={handleBackToMenu}>
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <Button variant="outline" onClick={handleBackToMenu} className="w-fit">
             ← Back to Menu
           </Button>
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-wrap gap-2 items-center">
             <span className="text-sm font-medium text-muted-foreground">Difficulty:</span>
             <Button
               variant={difficulty === "easy" ? "default" : "outline"}

@@ -55,7 +55,7 @@ function SubmitButton({ onClick }: { onClick?: () => boolean }) {
           e.preventDefault();
         }
       }}
-      className="flex-1 md:flex-none"
+      className="flex-1 md:flex-none bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-purple-500/50 transition-all"
     >
       {pending ? "Publishing..." : "Publish"}
     </Button>
@@ -353,7 +353,9 @@ export function ModernEditor({
           <article className="flex flex-col gap-6">
             <header className="flex flex-col gap-4">
               <h1 className="text-3xl md:text-5xl font-bold">
-                {title || "Untitled"}
+                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+                  {title || "Untitled"}
+                </span>
               </h1>
               
               {subtitle && (
@@ -365,7 +367,7 @@ export function ModernEditor({
               {tags.length > 0 && (
                 <div className="flex items-center gap-2 flex-wrap">
                   {tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
+                    <Badge key={tag} variant="secondary" className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-950 dark:to-pink-950 border-purple-200 dark:border-purple-800">
                       {tag}
                     </Badge>
                   ))}
@@ -414,7 +416,7 @@ export function ModernEditor({
               <Badge
                 key={tag}
                 variant="secondary"
-                className="text-sm gap-1 pr-1"
+                className="text-sm gap-1 pr-1 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-950 dark:to-pink-950 border-purple-200 dark:border-purple-800"
               >
                 {tag}
                 <Button

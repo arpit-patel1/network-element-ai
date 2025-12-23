@@ -40,14 +40,19 @@ export default async function BlogPage() {
 
   return (
     <div className="flex-1 w-full flex flex-col gap-8 max-w-4xl mx-auto py-12">
-      <div className="flex justify-between items-end gap-4">
+      <div className="flex flex-col md:flex-row justify-between md:items-end gap-6">
         <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-bold">Blog</h1>
+          <h1 className="text-4xl md:text-5xl font-bold">
+            <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
+              Blog
+            </span>
+          </h1>
           <p className="text-muted-foreground">
-           ✍️ Write and publish your blog posts, with a AI Powered Editor ✨
+           ✍️ Write and publish your blog posts, with a{" "}
+           <span className="text-purple-600 dark:text-purple-400 font-semibold">AI Powered Editor</span> ✨
           </p>
         </div>
-        <Button asChild>
+        <Button asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-purple-500/50 transition-all">
           <Link href="/protected/create-post" className="flex items-center gap-2">
             <PlusIcon size={16} />
             Create Post

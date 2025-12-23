@@ -24,7 +24,7 @@ export default function BlogLayout({
                   <span className="hidden sm:inline">Home</span>
                 </Link>
               </Button>
-              <Button asChild variant="default" size="sm" className="gap-2">
+              <Button asChild variant="default" size="sm" className="gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
                 <Link href={"/blog"}>
                   <BookOpen className="h-4 w-4" />
                   <span className="hidden sm:inline">Blog</span>

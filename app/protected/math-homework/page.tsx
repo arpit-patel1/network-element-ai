@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calculator, CheckCircle2, XCircle, Plus, Minus, X } from "lucide-react";
+import { Calculator, CheckCircle2, XCircle, Plus, Minus, X, Divide } from "lucide-react";
 
 interface Question {
   num1: number;
@@ -14,7 +14,7 @@ interface Question {
 }
 
 type FeedbackState = "none" | "correct" | "incorrect";
-type OperationType = "multiplication" | "addition" | "subtraction" | null;
+type OperationType = "multiplication" | "addition" | "subtraction" | "division" | null;
 type DifficultyLevel = "easy" | "medium" | "hard";
 
 export default function MathHomeworkPage() {
@@ -71,6 +71,20 @@ export default function MathHomeworkPage() {
           num2 = Math.floor(Math.random() * num1); // 0 to num1
         }
         correctAnswer = num1 - num2;
+        break;
+      case "division":
+        // Generate exact divisions only
+        if (currentDifficulty === "easy") {
+          num2 = Math.floor(Math.random() * 9) + 2; // 2-10
+          correctAnswer = Math.floor(Math.random() * 9) + 2; // 2-10
+        } else if (currentDifficulty === "medium") {
+          num2 = Math.floor(Math.random() * 9) + 2; // 2-10
+          correctAnswer = Math.floor(Math.random() * 10) + 2; // 2-11
+        } else {
+          num2 = Math.floor(Math.random() * 11) + 2; // 2-12
+          correctAnswer = Math.floor(Math.random() * 11) + 2; // 2-12
+        }
+        num1 = num2 * correctAnswer; // Ensure exact division
         break;
       default:
         return;
@@ -141,6 +155,8 @@ export default function MathHomeworkPage() {
         return "+";
       case "subtraction":
         return "−";
+      case "division":
+        return "÷";
       default:
         return "";
     }
@@ -154,6 +170,8 @@ export default function MathHomeworkPage() {
         return "addition";
       case "subtraction":
         return "subtraction";
+      case "division":
+        return "division";
       default:
         return "";
     }
@@ -176,7 +194,7 @@ export default function MathHomeworkPage() {
           </div>
 
           {/* Operation Selection Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card
               className="border-2 hover:border-primary cursor-pointer transition-all"
               onClick={() => setSelectedOperation("addition")}
@@ -228,6 +246,24 @@ export default function MathHomeworkPage() {
               </CardHeader>
               <CardContent className="text-center">
                 <p className="text-3xl font-bold text-muted-foreground">6 × 7 = ?</p>
+              </CardContent>
+            </Card>
+
+            <Card
+              className="border-2 hover:border-primary cursor-pointer transition-all"
+              onClick={() => setSelectedOperation("division")}
+            >
+              <CardHeader className="text-center">
+                <div className="flex justify-center mb-2">
+                  <div className="p-3 bg-green-100 dark:bg-green-950 rounded-lg">
+                    <Divide className="text-green-600 dark:text-green-400" size={32} />
+                  </div>
+                </div>
+                <CardTitle>Division</CardTitle>
+                <CardDescription>Practice division problems</CardDescription>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-3xl font-bold text-muted-foreground">24 ÷ 6 = ?</p>
               </CardContent>
             </Card>
           </div>

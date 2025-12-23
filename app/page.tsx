@@ -87,12 +87,12 @@ export default function Home() {
                     <CardTitle>Math Homework</CardTitle>
                   </div>
                   <CardDescription>
-                    Fun multiplication practice for kids with instant feedback and progress tracking.
+                    Interactive math practice with addition, subtraction, multiplication, and division. Multiple difficulty levels with instant feedback!
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    🎯 Random questions • ⚡ Instant feedback • 📊 Session stats
+                    ➕ ➖ ✖️ ➗ Four operations • 🎚️ 3 difficulty levels • 📊 Progress tracking
                   </p>
                 </CardContent>
               </Card>

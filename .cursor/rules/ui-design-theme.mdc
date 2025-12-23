@@ -1,3 +1,19 @@
 ---
 alwaysApply: true
 ---
+
+# UI Design Theme
+
+- Embrace vibrant gradients as the primary accent style.
+  - Hero and page headings: purple → pink → purple (or purple → blue → cyan when matching math pages) using `bg-gradient-to-r` with `bg-clip-text text-transparent`.
+  - Buttons: gradient backgrounds with hover darkening and soft shadow glow in the same hue family.
+- Cards and badges:
+  - Light overlays: `bg-gradient-to-br .../20-50` with subtle borders; maintain readability in dark mode with `/20-30` alphas.
+  - Status/label badges: gradient fills that match their semantic color (draft: purple/pink, enhancing: amber/orange, enhanced: green/emerald).
+  - Tags: purple/pink gradient backgrounds with thin matching borders.
+- Icons: place on small gradient pills in the same color family (e.g., purple→blue for math, purple→pink for blog) with white icons for contrast.
+- Text emphasis: use gradient text sparingly for top-level titles and key callouts; keep body text neutral (`text-foreground` or `text-muted-foreground`).
+- Consistency across sections:
+  - Blog: purple ↔ pink as the primary palette.
+  - Math: operation-specific gradients (Addition blue/cyan, Subtraction orange/red, Multiplication purple/pink, Division emerald/green) plus a shared purple→blue→cyan header accent.
+- Avoid inline styles; use Tailwind utilities and shadcn/ui primitives exclusively. Keep dark-mode contrast by pairing gradients with appropriate text colors/borders.

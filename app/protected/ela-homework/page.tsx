@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpenCheck, Sparkles, ArrowRight, SpellCheck, FileText } from "lucide-react";
+import { BookOpenCheck, Sparkles, ArrowRight, SpellCheck, FileText, BookOpen } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -117,6 +117,37 @@ export default function ELAHomeworkPage() {
                 size="lg"
               >
                 <Link href="/protected/ela-homework/paragraph-review" className="flex items-center gap-2">
+                  Start practicing
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
+            <CardHeader className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
+                  <BookOpen className="text-white" size={22} />
+                </div>
+                <div>
+                  <CardTitle className="text-purple-700 dark:text-purple-200">Mario & Luigi Quiz</CardTitle>
+                  <CardDescription>Read about Mario and Luigi, answer questions, and test your knowledge.</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <ul className="space-y-2 text-muted-foreground">
+                <li>• Read passages about Mario and Luigi characters.</li>
+                <li>• Answer questions with four multiple choice options.</li>
+                <li>• Get instant feedback on your answers.</li>
+              </ul>
+              <Button
+                asChild
+                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
+                size="lg"
+              >
+                <Link href="/protected/ela-homework/mario-luigi-quiz" className="flex items-center gap-2">
                   Start practicing
                   <ArrowRight className="w-4 h-4" />
                 </Link>

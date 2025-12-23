@@ -29,14 +29,14 @@ export default function AdditionHomeworkPage() {
     let num1: number, num2: number;
     
     if (currentDifficulty === "easy") {
-      num1 = Math.floor(Math.random() * 20) + 1; // 1-20
-      num2 = Math.floor(Math.random() * 20) + 1; // 1-20
+      num1 = Math.floor(Math.random() * 90) + 10; // 10-99 (2-digit)
+      num2 = Math.floor(Math.random() * 90) + 10; // 10-99 (2-digit)
     } else if (currentDifficulty === "medium") {
-      num1 = Math.floor(Math.random() * 41) + 10; // 10-50
-      num2 = Math.floor(Math.random() * 41) + 10; // 10-50
+      num1 = Math.floor(Math.random() * 900) + 100; // 100-999 (3-digit)
+      num2 = Math.floor(Math.random() * 900) + 100; // 100-999 (3-digit)
     } else {
-      num1 = Math.floor(Math.random() * 81) + 20; // 20-100
-      num2 = Math.floor(Math.random() * 81) + 20; // 20-100
+      num1 = Math.floor(Math.random() * 9000) + 1000; // 1000-9999 (4-digit)
+      num2 = Math.floor(Math.random() * 9000) + 1000; // 1000-9999 (4-digit)
     }
     
     const correctAnswer = num1 + num2;

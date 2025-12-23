@@ -29,14 +29,14 @@ export default function DivisionHomeworkPage() {
     let num2: number, correctAnswer: number, num1: number;
     
     if (currentDifficulty === "easy") {
-      num2 = Math.floor(Math.random() * 9) + 2; // 2-10
-      correctAnswer = Math.floor(Math.random() * 9) + 2; // 2-10
+      num2 = Math.floor(Math.random() * 4) + 2; // 2-5
+      correctAnswer = Math.floor(Math.random() * 4) + 2; // 2-5
     } else if (currentDifficulty === "medium") {
-      num2 = Math.floor(Math.random() * 9) + 2; // 2-10
-      correctAnswer = Math.floor(Math.random() * 10) + 2; // 2-11
+      num2 = Math.floor(Math.random() * 7) + 5; // 5-11
+      correctAnswer = Math.floor(Math.random() * 7) + 5; // 5-11
     } else {
-      num2 = Math.floor(Math.random() * 11) + 2; // 2-12
-      correctAnswer = Math.floor(Math.random() * 11) + 2; // 2-12
+      num2 = Math.floor(Math.random() * 11) + 10; // 10-20
+      correctAnswer = Math.floor(Math.random() * 11) + 10; // 10-20
     }
     
     num1 = num2 * correctAnswer; // Ensure exact division

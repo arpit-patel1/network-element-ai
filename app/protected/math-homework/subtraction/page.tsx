@@ -29,14 +29,34 @@ export default function SubtractionHomeworkPage() {
     let num1: number, num2: number;
     
     if (currentDifficulty === "easy") {
-      num1 = Math.floor(Math.random() * 20) + 1; // 1-20
-      num2 = Math.floor(Math.random() * num1); // 0 to num1
+      // 2-digit subtraction without borrowing (no regrouping)
+      num1 = Math.floor(Math.random() * 90) + 10; // 10-99
+      const num1Tens = Math.floor(num1 / 10);
+      const num1Ones = num1 % 10;
+      // Generate num2 where tens <= num1Tens and ones <= num1Ones (when tens are equal)
+      const num2Tens = Math.floor(Math.random() * (num1Tens + 1)); // 0 to num1Tens
+      const num2Ones = num2Tens === num1Tens 
+        ? Math.floor(Math.random() * num1Ones) // 0 to num1Ones-1 if same tens (ensures num2 < num1)
+        : Math.floor(Math.random() * 10); // 0-9 if different tens
+      num2 = num2Tens * 10 + num2Ones;
+      // Final check: ensure num2 < num1 and no borrowing needed
+      if (num2 >= num1 || (num2Tens === num1Tens && num2Ones > num1Ones)) {
+        // Regenerate num2 if needed
+        num2 = Math.max(0, num1 - Math.floor(Math.random() * 10) - 1);
+        const num2TensNew = Math.floor(num2 / 10);
+        const num2OnesNew = num2 % 10;
+        if (num2TensNew === num1Tens && num2OnesNew > num1Ones) {
+          num2 = num2TensNew * 10 + num1Ones - 1;
+        }
+      }
     } else if (currentDifficulty === "medium") {
-      num1 = Math.floor(Math.random() * 41) + 10; // 10-50
-      num2 = Math.floor(Math.random() * num1); // 0 to num1
+      // 2-digit subtraction with or without borrowing
+      num1 = Math.floor(Math.random() * 90) + 10; // 10-99
+      num2 = Math.floor(Math.random() * num1); // 0 to num1-1
     } else {
-      num1 = Math.floor(Math.random() * 81) + 20; // 20-100
-      num2 = Math.floor(Math.random() * num1); // 0 to num1
+      // 3-digit subtraction with or without borrowing
+      num1 = Math.floor(Math.random() * 900) + 100; // 100-999
+      num2 = Math.floor(Math.random() * num1); // 0 to num1-1
     }
     
     const correctAnswer = num1 - num2;

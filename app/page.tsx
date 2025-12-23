@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
-import { BookOpen, CheckSquare, Code2 } from "lucide-react";
+import { BookOpen, Calculator, Code2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 export default function Home() {
@@ -66,24 +66,26 @@ export default function Home() {
               </Card>
             </Link>
 
-            <Card className="border-dashed opacity-60 h-full">
-              <CardHeader>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 bg-muted rounded-lg">
-                    <CheckSquare className="text-muted-foreground" size={24} />
+            <Link href="/protected/math-homework">
+              <Card className="hover:border-primary/50 transition-all hover:shadow-md h-full">
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <Calculator className="text-primary" size={24} />
+                    </div>
+                    <CardTitle>Math Homework</CardTitle>
                   </div>
-                  <CardTitle className="text-muted-foreground">Todo App</CardTitle>
-                </div>
-                <CardDescription>
-                  Task management application with categories, priorities, and real-time updates.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground italic">
-                  Coming soon...
-                </p>
-              </CardContent>
-            </Card>
+                  <CardDescription>
+                    Fun multiplication practice for kids with instant feedback and progress tracking.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    🎯 Random questions • ⚡ Instant feedback • 📊 Session stats
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
 
           {/* Tech Stack */}

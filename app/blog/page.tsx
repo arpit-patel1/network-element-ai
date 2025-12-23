@@ -13,7 +13,10 @@ export default async function BlogPage() {
 
   let query = supabase
     .from("posts")
-    .select("*")
+    .select(`
+      *,
+      author:users(id, name, avatar_url)
+    `)
     .order("created_at", { ascending: false });
 
   if (user) {
@@ -41,7 +44,7 @@ export default async function BlogPage() {
         <div className="flex flex-col gap-2">
           <h1 className="text-4xl font-bold">Blog</h1>
           <p className="text-muted-foreground">
-            Welcome to our blog. Check out our latest posts below.
+           ✍️ Write and publish your blog posts, with a AI Powered Editor ✨
           </p>
         </div>
         <Button asChild>

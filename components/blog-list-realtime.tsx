@@ -17,6 +17,11 @@ type Post = {
   tags: string[] | null;
   author_id: string;
   enhancement_status?: 'enhancing' | 'enhanced' | 'none';
+  author?: {
+    id: string;
+    name: string | null;
+    avatar_url: string | null;
+  };
 };
 
 export function BlogListRealtime({ 
@@ -39,7 +44,10 @@ export function BlogListRealtime({
       try {
         let query = supabase
           .from("posts")
-          .select("*")
+          .select(`
+            *,
+            author:users(id, name, avatar_url)
+          `)
           .order("created_at", { ascending: false });
 
         if (userId) {
@@ -159,6 +167,14 @@ export function BlogListRealtime({
                   </p>
                 )}
                 <div className="flex items-center gap-3 flex-wrap">
+                  {post.author?.name && (
+                    <>
+                      <p className="text-xs text-muted-foreground">
+                        By {post.author.name}
+                      </p>
+                      <span className="text-muted-foreground text-xs">•</span>
+                    </>
+                  )}
                   <p className="text-xs text-muted-foreground">
                     {new Date(post.created_at).toLocaleDateString()}
                   </p>

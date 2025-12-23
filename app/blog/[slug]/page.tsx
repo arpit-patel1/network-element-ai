@@ -19,7 +19,10 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const { data: post, error } = await supabase
     .from("posts")
-    .select("*")
+    .select(`
+      *,
+      author:users(id, name, avatar_url)
+    `)
     .eq("slug", slug)
     .single();
 
@@ -116,8 +119,16 @@ export default async function PostPage({ params }: PostPageProps) {
           )}
 
           <div className="flex items-center gap-3 flex-wrap">
+            {post.author?.name && (
+              <>
+                <p className="text-sm text-muted-foreground">
+                  By {post.author.name}
+                </p>
+                <span className="text-muted-foreground">•</span>
+              </>
+            )}
             <p className="text-sm text-muted-foreground">
-              Published on {new Date(post.created_at).toLocaleDateString()}
+              {new Date(post.created_at).toLocaleDateString()}
             </p>
             
             {post.tags && post.tags.length > 0 && (

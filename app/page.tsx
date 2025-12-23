@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
-import { BookMarked, BookOpen, Calculator, Code2, Home as HomeIcon } from "lucide-react";
+import { BookMarked, BookOpen, Calculator, Code2, Home as HomeIcon, Trophy } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -118,6 +118,27 @@ export default function Home() {
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
                     ➕ ➖ ✖️ ➗ Four operations • 🎚️ 3 difficulty levels • 📊 Progress tracking
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/protected/mario-math-race">
+              <Card className="hover:border-red-500/50 transition-all hover:shadow-lg hover:shadow-red-500/20 h-full bg-gradient-to-br from-red-50/50 to-transparent dark:from-red-950/20 dark:to-transparent">
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
+                      <Trophy className="text-white" size={24} />
+                    </div>
+                    <CardTitle className="text-red-700 dark:text-red-300">Mario Math Race</CardTitle>
+                  </div>
+                  <CardDescription>
+                    Race to the finish line by solving math problems! Choose Mario or Luigi and answer questions correctly to advance. Fun, fast-paced math practice game.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    🎮 Single player • 🏁 Race to finish • ⚡ Fast & fun • 🎯 All operations
                   </p>
                 </CardContent>
               </Card>

@@ -117,6 +117,62 @@ This project is optimized for deployment on Vercel:
 3. Add your environment variables
 4. Deploy!
 
+### Environment variables
+
+Configure these both locally (in `.env.local`) and on Vercel (Project Settings → Environment Variables):
+
+- `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` — Supabase project keys.
+- `N8N_READING_WEBHOOK_URL` — the n8n webhook URL that returns the reading comprehension payload.
+- `N8N_API_KEY` — the `x-api-key` header value required by the webhook (shared across n8n workflows).
+
+### Reading comprehension webhook schema
+
+Provide this JSON Schema to n8n/agents so responses match what the API expects. The API also accepts a wrapped `{ "data": { ... } }` version and normalizes it for the UI.
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReadingComprehensionQuestion",
+  "type": "object",
+  "required": ["paragraph", "question", "choices", "correctAnswer"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional identifier for the question"
+    },
+    "paragraph": {
+      "type": "string",
+      "minLength": 1,
+      "description": "paragraph text the student must read"
+    },
+    "question": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Question about the paragraph"
+    },
+    "choices": {
+      "type": "object",
+      "required": ["ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"],
+      "properties": {
+        "ChoiceA": { "type": "string", "minLength": 1 },
+        "ChoiceB": { "type": "string", "minLength": 1 },
+        "ChoiceC": { "type": "string", "minLength": 1 },
+        "ChoiceD": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false,
+      "description": "Four answer choices"
+    },
+    "correctAnswer": {
+      "type": "string",
+      "enum": ["ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"],
+      "description": "Key name of the correct choice"
+    }
+  },
+  "additionalProperties": false
+}
+```
+
 ## 📄 License
 
 MIT License - feel free to use this for your own projects!

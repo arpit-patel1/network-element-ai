@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
-import { BookOpen, Calculator, Code2, Home as HomeIcon } from "lucide-react";
+import { BookMarked, BookOpen, Calculator, Code2, Home as HomeIcon } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -59,7 +59,7 @@ export default function Home() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
             <Link href="/blog">
               <Card className="hover:border-purple-500/50 transition-all hover:shadow-lg hover:shadow-purple-500/20 h-full bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-950/20 dark:to-transparent">
                 <CardHeader>
@@ -76,6 +76,27 @@ export default function Home() {
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
                     ✨ Full CRUD operations • 🔒 Row Level Security • 📝 Draft support
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/protected/ela-homework">
+              <Card className="hover:border-pink-500/50 transition-all hover:shadow-lg hover:shadow-pink-500/20 h-full bg-gradient-to-br from-pink-50/50 to-transparent dark:from-pink-950/20 dark:to-transparent">
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
+                      <BookMarked className="text-white" size={24} />
+                    </div>
+                    <CardTitle className="text-pink-700 dark:text-pink-200">ELA Homework</CardTitle>
+                  </div>
+                  <CardDescription>
+                    Reading comprehension practice powered by n8n. Get passages, answer questions, and receive instant feedback.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    📚 Fresh passages • ✅ Immediate feedback • 🔁 New questions on demand
                   </p>
                 </CardContent>
               </Card>

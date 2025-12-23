@@ -13,9 +13,7 @@ const questionSchema = z.object({
   paragraph: z.string().min(1, "Passage text is required"),
   question: z.string().min(1, "Question is required"),
   choices: choiceSchema,
-  correctAnswer: z.enum(["ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"], {
-    errorMap: () => ({ message: "correctAnswer must be one of ChoiceA/ChoiceB/ChoiceC/ChoiceD" }),
-  }),
+  correctAnswer: z.enum(["ChoiceA", "ChoiceB", "ChoiceC", "ChoiceD"]),
 });
 
 const webhookResponseSchema = z.union([

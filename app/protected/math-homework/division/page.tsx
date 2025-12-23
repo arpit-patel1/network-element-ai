@@ -100,22 +100,26 @@ export default function DivisionHomeworkPage() {
     <div className="flex-1 w-full flex flex-col gap-8 items-center py-8">
       <div className="w-full max-w-2xl flex flex-col gap-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Calculator className="text-primary" size={28} />
+            <div className="p-3 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg shadow-lg">
+              <Calculator className="text-white" size={28} />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Math Homework</h1>
+              <h1 className="text-3xl font-bold">
+                <span className="bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-600 bg-clip-text text-transparent">
+                  Math Homework
+                </span>
+              </h1>
               <p className="text-muted-foreground">Practice your division!</p>
             </div>
           </div>
           <div className="flex gap-2">
-            <Badge variant="secondary" className="px-4 py-2">
+            <Badge variant="secondary" className="px-4 py-2 bg-gradient-to-r from-emerald-100 to-green-100 dark:from-emerald-950 dark:to-green-950 border-emerald-300 dark:border-emerald-700">
               Score: {stats.correct}/{stats.attempted}
             </Badge>
             {stats.attempted > 0 && (
-              <Badge variant="outline" className="px-4 py-2">
+              <Badge variant="outline" className="px-4 py-2 border-green-300 dark:border-green-700">
                 {accuracy}% Correct
               </Badge>
             )}
@@ -149,10 +153,12 @@ export default function DivisionHomeworkPage() {
         </div>
 
         {/* Question Card */}
-        <Card className="border-2">
+        <Card className="border-2 bg-gradient-to-br from-emerald-50/40 to-green-50/40 dark:from-emerald-950/30 dark:to-green-950/30 border-emerald-200 dark:border-emerald-800">
           <CardHeader>
-            <CardTitle className="text-center text-4xl font-bold">
-              {question.num1} ÷ {question.num2} = ?
+            <CardTitle className="text-center text-4xl md:text-5xl font-bold">
+              <span className="bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">
+                {question.num1} ÷ {question.num2} = ?
+              </span>
             </CardTitle>
             <CardDescription className="text-center">
               Choose the correct answer

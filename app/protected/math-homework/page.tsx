@@ -184,11 +184,15 @@ export default function MathHomeworkPage() {
         <div className="w-full max-w-2xl flex flex-col gap-6">
           {/* Header */}
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Calculator className="text-primary" size={28} />
+            <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg shadow-lg">
+              <Calculator className="text-white" size={28} />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Math Homework</h1>
+              <h1 className="text-3xl md:text-4xl font-bold">
+                <span className="bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                  Math Homework
+                </span>
+              </h1>
               <p className="text-muted-foreground">Choose a type of practice</p>
             </div>
           </div>
@@ -196,74 +200,74 @@ export default function MathHomeworkPage() {
           {/* Operation Selection Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card
-              className="border-2 hover:border-primary cursor-pointer transition-all"
+              className="border-2 hover:border-blue-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-500/30 bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-950/30 dark:to-transparent"
               onClick={() => setSelectedOperation("addition")}
             >
               <CardHeader className="text-center">
                 <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-blue-100 dark:bg-blue-950 rounded-lg">
-                    <Plus className="text-blue-600 dark:text-blue-400" size={32} />
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg shadow-md">
+                    <Plus className="text-white" size={32} />
                   </div>
                 </div>
-                <CardTitle>Addition</CardTitle>
+                <CardTitle className="text-blue-700 dark:text-blue-300">Addition</CardTitle>
                 <CardDescription>Practice adding numbers</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-3xl font-bold text-muted-foreground">10 + 15 = ?</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">10 + 15 = ?</p>
               </CardContent>
             </Card>
 
             <Card
-              className="border-2 hover:border-primary cursor-pointer transition-all"
+              className="border-2 hover:border-orange-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-orange-500/30 bg-gradient-to-br from-orange-50/50 to-transparent dark:from-orange-950/30 dark:to-transparent"
               onClick={() => setSelectedOperation("subtraction")}
             >
               <CardHeader className="text-center">
                 <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-orange-100 dark:bg-orange-950 rounded-lg">
-                    <Minus className="text-orange-600 dark:text-orange-400" size={32} />
+                  <div className="p-3 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg shadow-md">
+                    <Minus className="text-white" size={32} />
                   </div>
                 </div>
-                <CardTitle>Subtraction</CardTitle>
+                <CardTitle className="text-orange-700 dark:text-orange-300">Subtraction</CardTitle>
                 <CardDescription>Practice subtracting numbers</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-3xl font-bold text-muted-foreground">25 − 12 = ?</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">25 − 12 = ?</p>
               </CardContent>
             </Card>
 
             <Card
-              className="border-2 hover:border-primary cursor-pointer transition-all"
+              className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-950/30 dark:to-transparent"
               onClick={() => setSelectedOperation("multiplication")}
             >
               <CardHeader className="text-center">
                 <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-purple-100 dark:bg-purple-950 rounded-lg">
-                    <X className="text-purple-600 dark:text-purple-400" size={32} />
+                  <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
+                    <X className="text-white" size={32} />
                   </div>
                 </div>
-                <CardTitle>Multiplication</CardTitle>
+                <CardTitle className="text-purple-700 dark:text-purple-300">Multiplication</CardTitle>
                 <CardDescription>Practice multiplication tables</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-3xl font-bold text-muted-foreground">6 × 7 = ?</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">6 × 7 = ?</p>
               </CardContent>
             </Card>
 
             <Card
-              className="border-2 hover:border-primary cursor-pointer transition-all"
+              className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/50 to-transparent dark:from-emerald-950/30 dark:to-transparent"
               onClick={() => setSelectedOperation("division")}
             >
               <CardHeader className="text-center">
                 <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-green-100 dark:bg-green-950 rounded-lg">
-                    <Divide className="text-green-600 dark:text-green-400" size={32} />
+                  <div className="p-3 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg shadow-md">
+                    <Divide className="text-white" size={32} />
                   </div>
                 </div>
-                <CardTitle>Division</CardTitle>
+                <CardTitle className="text-emerald-700 dark:text-emerald-300">Division</CardTitle>
                 <CardDescription>Practice division problems</CardDescription>
               </CardHeader>
               <CardContent className="text-center">
-                <p className="text-3xl font-bold text-muted-foreground">24 ÷ 6 = ?</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">24 ÷ 6 = ?</p>
               </CardContent>
             </Card>
           </div>
@@ -284,22 +288,26 @@ export default function MathHomeworkPage() {
     <div className="flex-1 w-full flex flex-col gap-8 items-center py-8">
       <div className="w-full max-w-2xl flex flex-col gap-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Calculator className="text-primary" size={28} />
+            <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg shadow-lg">
+              <Calculator className="text-white" size={28} />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">Math Homework</h1>
+              <h1 className="text-3xl font-bold">
+                <span className="bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                  Math Homework
+                </span>
+              </h1>
               <p className="text-muted-foreground">Practice your {getOperationName()}!</p>
             </div>
           </div>
           <div className="flex gap-2">
-            <Badge variant="secondary" className="px-4 py-2">
+            <Badge variant="secondary" className="px-4 py-2 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-950 dark:to-blue-950 border-purple-300 dark:border-purple-700">
               Score: {stats.correct}/{stats.attempted}
             </Badge>
             {stats.attempted > 0 && (
-              <Badge variant="outline" className="px-4 py-2">
+              <Badge variant="outline" className="px-4 py-2 border-blue-300 dark:border-blue-700">
                 {accuracy}% Correct
               </Badge>
             )}
@@ -338,10 +346,12 @@ export default function MathHomeworkPage() {
         </div>
 
         {/* Question Card */}
-        <Card className="border-2">
+        <Card className="border-2 bg-gradient-to-br from-purple-50/30 via-blue-50/30 to-cyan-50/30 dark:from-purple-950/20 dark:via-blue-950/20 dark:to-cyan-950/20">
           <CardHeader>
-            <CardTitle className="text-center text-4xl font-bold">
-              {question.num1} {getOperationSymbol()} {question.num2} = ?
+            <CardTitle className="text-center text-4xl md:text-5xl font-bold">
+              <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                {question.num1} {getOperationSymbol()} {question.num2} = ?
+              </span>
             </CardTitle>
             <CardDescription className="text-center">
               Choose the correct answer

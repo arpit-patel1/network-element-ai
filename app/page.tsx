@@ -41,15 +41,19 @@ export default function Home() {
         <div className="flex-1 flex flex-col gap-16 max-w-5xl p-5 w-full">
           {/* Hero Section */}
           <div className="flex flex-col gap-8 items-center text-center py-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-cyan-500/20 border border-purple-500/30 text-purple-600 dark:text-purple-400 text-sm font-medium backdrop-blur-sm">
               <Code2 size={16} />
               Personal Projects Playground
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-              Welcome to My Playground
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
+              <span className="bg-gradient-to-r from-purple-600 via-purple-400 to-blue-500 bg-clip-text text-transparent animate-gradient">
+                Welcome to the Playground
+              </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl">
-              A collection of projects built with Next.js, Supabase, and modern web technologies.
+              A collection of projects built with{" "}
+              <span className="text-purple-600 dark:text-purple-400 font-semibold">Next.js</span>,{" "}
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Supabase</span>, and modern web technologies.
               Experimenting, learning, and building in public.
             </p>
           </div>
@@ -57,13 +61,13 @@ export default function Home() {
           {/* Projects Grid */}
           <div className="grid md:grid-cols-2 gap-6">
             <Link href="/blog">
-              <Card className="hover:border-primary/50 transition-all hover:shadow-md h-full">
+              <Card className="hover:border-purple-500/50 transition-all hover:shadow-lg hover:shadow-purple-500/20 h-full bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-950/20 dark:to-transparent">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <BookOpen className="text-primary" size={24} />
+                    <div className="p-2 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg">
+                      <BookOpen className="text-white" size={24} />
                     </div>
-                    <CardTitle>Blog</CardTitle>
+                    <CardTitle className="text-purple-700 dark:text-purple-300">Blog</CardTitle>
                   </div>
                   <CardDescription>
                     Thoughts, tutorials, and learnings about web development, programming, and technology.
@@ -78,13 +82,13 @@ export default function Home() {
             </Link>
 
             <Link href="/protected/math-homework">
-              <Card className="hover:border-primary/50 transition-all hover:shadow-md h-full">
+              <Card className="hover:border-blue-500/50 transition-all hover:shadow-lg hover:shadow-blue-500/20 h-full bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-950/20 dark:to-transparent">
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Calculator className="text-primary" size={24} />
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg">
+                      <Calculator className="text-white" size={24} />
                     </div>
-                    <CardTitle>Math Homework</CardTitle>
+                    <CardTitle className="text-blue-700 dark:text-blue-300">Math Homework</CardTitle>
                   </div>
                   <CardDescription>
                     Interactive math practice with addition, subtraction, multiplication, and division. Multiple difficulty levels with instant feedback!
@@ -101,14 +105,21 @@ export default function Home() {
 
           {/* Tech Stack */}
           <div className="flex flex-col gap-6 items-center py-8">
-            <h2 className="text-2xl font-semibold">Built With</h2>
+            <h2 className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Built With</h2>
             <div className="flex flex-wrap gap-4 justify-center">
-              {["Next.js 16", "React 19", "TypeScript", "Supabase", "Tailwind CSS", "shadcn/ui"].map((tech) => (
+              {[
+                { name: "Next.js 16", colors: "bg-gradient-to-r from-slate-900 to-slate-700 text-white" },
+                { name: "React 19", colors: "bg-gradient-to-r from-cyan-500 to-blue-500 text-white" },
+                { name: "TypeScript", colors: "bg-gradient-to-r from-blue-600 to-blue-700 text-white" },
+                { name: "Supabase", colors: "bg-gradient-to-r from-emerald-500 to-green-600 text-white" },
+                { name: "Tailwind CSS", colors: "bg-gradient-to-r from-cyan-400 to-blue-500 text-white" },
+                { name: "shadcn/ui", colors: "bg-gradient-to-r from-purple-600 to-pink-600 text-white" }
+              ].map((tech) => (
                 <div
-                  key={tech}
-                  className="px-4 py-2 rounded-lg bg-accent text-sm font-medium"
+                  key={tech.name}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium shadow-md hover:shadow-lg transition-all hover:scale-105 ${tech.colors}`}
                 >
-                  {tech}
+                  {tech.name}
                 </div>
               ))}
             </div>

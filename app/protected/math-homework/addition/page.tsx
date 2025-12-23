@@ -1,0 +1,261 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Calculator, CheckCircle2, XCircle } from "lucide-react";
+
+interface Question {
+  num1: number;
+  num2: number;
+  correctAnswer: number;
+  options: number[];
+}
+
+type FeedbackState = "none" | "correct" | "incorrect";
+type DifficultyLevel = "easy" | "medium" | "hard";
+
+export default function AdditionHomeworkPage() {
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>("medium");
+  const [question, setQuestion] = useState<Question | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackState>("none");
+  const [stats, setStats] = useState({ attempted: 0, correct: 0 });
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  // Generate a random addition question based on difficulty
+  const generateQuestion = (currentDifficulty: DifficultyLevel) => {
+    let num1: number, num2: number;
+    
+    if (currentDifficulty === "easy") {
+      num1 = Math.floor(Math.random() * 20) + 1; // 1-20
+      num2 = Math.floor(Math.random() * 20) + 1; // 1-20
+    } else if (currentDifficulty === "medium") {
+      num1 = Math.floor(Math.random() * 41) + 10; // 10-50
+      num2 = Math.floor(Math.random() * 41) + 10; // 10-50
+    } else {
+      num1 = Math.floor(Math.random() * 81) + 20; // 20-100
+      num2 = Math.floor(Math.random() * 81) + 20; // 20-100
+    }
+    
+    const correctAnswer = num1 + num2;
+
+    // Generate 3 incorrect but plausible answers
+    const incorrectAnswers = new Set<number>();
+    while (incorrectAnswers.size < 3) {
+      const offset = Math.floor(Math.random() * 20) - 10; // -10 to +10
+      const wrongAnswer = correctAnswer + offset;
+      if (wrongAnswer !== correctAnswer && wrongAnswer > 0) {
+        incorrectAnswers.add(wrongAnswer);
+      }
+    }
+
+    // Combine and shuffle options
+    const options = [correctAnswer, ...Array.from(incorrectAnswers)];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+
+    setQuestion({ num1, num2, correctAnswer, options });
+    setSelectedAnswer(null);
+    setFeedback("none");
+    setHasSubmitted(false);
+  };
+
+  // Initialize with first question when difficulty changes
+  useEffect(() => {
+    generateQuestion(difficulty);
+  }, [difficulty]);
+
+  const handleSubmit = () => {
+    if (selectedAnswer === null || !question) return;
+
+    setHasSubmitted(true);
+    const isCorrect = selectedAnswer === question.correctAnswer;
+    setFeedback(isCorrect ? "correct" : "incorrect");
+    setStats((prev) => ({
+      attempted: prev.attempted + 1,
+      correct: prev.correct + (isCorrect ? 1 : 0),
+    }));
+  };
+
+  const handleNextQuestion = () => {
+    generateQuestion(difficulty);
+  };
+
+  const handleDifficultyChange = (newDifficulty: DifficultyLevel) => {
+    setDifficulty(newDifficulty);
+    setStats({ attempted: 0, correct: 0 });
+  };
+
+  if (!question) {
+    return <div>Loading...</div>;
+  }
+
+  const accuracy = stats.attempted > 0 ? Math.round((stats.correct / stats.attempted) * 100) : 0;
+
+  return (
+    <div className="flex-1 w-full flex flex-col gap-8 items-center py-8">
+      <div className="w-full max-w-2xl flex flex-col gap-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Calculator className="text-primary" size={28} />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold">Math Homework</h1>
+              <p className="text-muted-foreground">Practice your addition!</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Badge variant="secondary" className="px-4 py-2">
+              Score: {stats.correct}/{stats.attempted}
+            </Badge>
+            {stats.attempted > 0 && (
+              <Badge variant="outline" className="px-4 py-2">
+                {accuracy}% Correct
+              </Badge>
+            )}
+          </div>
+        </div>
+
+        {/* Difficulty Selector */}
+        <div className="flex gap-2 items-center justify-center">
+          <span className="text-sm font-medium text-muted-foreground">Difficulty:</span>
+          <Button
+            variant={difficulty === "easy" ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleDifficultyChange("easy")}
+          >
+            Easy
+          </Button>
+          <Button
+            variant={difficulty === "medium" ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleDifficultyChange("medium")}
+          >
+            Medium
+          </Button>
+          <Button
+            variant={difficulty === "hard" ? "default" : "outline"}
+            size="sm"
+            onClick={() => handleDifficultyChange("hard")}
+          >
+            Hard
+          </Button>
+        </div>
+
+        {/* Question Card */}
+        <Card className="border-2">
+          <CardHeader>
+            <CardTitle className="text-center text-4xl font-bold">
+              {question.num1} + {question.num2} = ?
+            </CardTitle>
+            <CardDescription className="text-center">
+              Choose the correct answer
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Answer Options */}
+            <div className="grid grid-cols-2 gap-4">
+              {question.options.map((option) => {
+                const isSelected = selectedAnswer === option;
+                const isCorrect = option === question.correctAnswer;
+                const showCorrect = hasSubmitted && isCorrect;
+                const showIncorrect = hasSubmitted && isSelected && !isCorrect;
+
+                return (
+                  <Button
+                    key={option}
+                    variant={isSelected ? "default" : "outline"}
+                    size="lg"
+                    className={`h-20 text-2xl font-bold transition-all ${
+                      showCorrect
+                        ? "bg-green-500 hover:bg-green-600 text-white border-green-600"
+                        : showIncorrect
+                        ? "bg-red-500 hover:bg-red-600 text-white border-red-600"
+                        : ""
+                    }`}
+                    onClick={() => !hasSubmitted && setSelectedAnswer(option)}
+                    disabled={hasSubmitted}
+                  >
+                    {option}
+                  </Button>
+                );
+              })}
+            </div>
+
+            {/* Feedback Message */}
+            {feedback !== "none" && (
+              <div
+                className={`flex items-center gap-3 p-4 rounded-lg ${
+                  feedback === "correct"
+                    ? "bg-green-50 text-green-900 dark:bg-green-950 dark:text-green-100"
+                    : "bg-red-50 text-red-900 dark:bg-red-950 dark:text-red-100"
+                }`}
+              >
+                {feedback === "correct" ? (
+                  <>
+                    <CheckCircle2 size={24} className="text-green-600 dark:text-green-400" />
+                    <div>
+                      <p className="font-bold">Correct! Well done! 🎉</p>
+                      <p className="text-sm">
+                        {question.num1} + {question.num2} = {question.correctAnswer}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <XCircle size={24} className="text-red-600 dark:text-red-400" />
+                    <div>
+                      <p className="font-bold">Not quite right. Keep practicing! 💪</p>
+                      <p className="text-sm">
+                        The correct answer is: {question.num1} + {question.num2} ={" "}
+                        {question.correctAnswer}
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex justify-center pt-4">
+              {!hasSubmitted ? (
+                <Button
+                  size="lg"
+                  onClick={handleSubmit}
+                  disabled={selectedAnswer === null}
+                  className="px-8"
+                >
+                  Submit Answer
+                </Button>
+              ) : (
+                <Button size="lg" onClick={handleNextQuestion} className="px-8">
+                  Next Question →
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Encouragement Message */}
+        {stats.attempted > 0 && (
+          <div className="text-center text-muted-foreground">
+            <p>
+              {accuracy >= 80
+                ? "🌟 Excellent work! You're a math star!"
+                : accuracy >= 60
+                ? "👍 Good job! Keep practicing!"
+                : "💪 Keep going! Practice makes perfect!"}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+

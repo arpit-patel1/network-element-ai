@@ -123,4 +123,4 @@ MIT License - feel free to use this for your own projects!
 
 ---
 
-Built with ❤️ using modern web technologies
+Built with ❤️ by Daddy

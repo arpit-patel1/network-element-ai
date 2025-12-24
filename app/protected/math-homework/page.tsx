@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calculator, CheckCircle2, XCircle, Plus, Minus, X, Divide } from "lucide-react";
+import { Calculator, CheckCircle2, XCircle, Plus, Minus, X, Divide, Coins, Clock, Ruler, Shapes, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface Question {
   num1: number;
@@ -218,78 +219,209 @@ export default function MathHomeworkPage() {
           </div>
 
           {/* Operation Selection Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card
-              className="border-2 hover:border-blue-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-500/30 bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-950/30 dark:to-transparent"
-              onClick={() => setSelectedOperation("addition")}
-            >
-              <CardHeader className="text-center">
-                <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg shadow-md">
-                    <Plus className="text-white" size={32} />
-                  </div>
-                </div>
-                <CardTitle className="text-blue-700 dark:text-blue-300">Addition</CardTitle>
-                <CardDescription>Practice adding numbers</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">10 + 15 = ?</p>
-              </CardContent>
-            </Card>
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-xl font-semibold mb-3 text-muted-foreground">Basic Operations</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card className="border-2 hover:border-blue-500/50 transition-all hover:shadow-lg hover:shadow-blue-500/30 bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-950/30 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg shadow-md">
+                        <Plus className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-blue-700 dark:text-blue-300">Addition</CardTitle>
+                    <CardDescription className="text-xs">Practice adding numbers</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      onClick={() => setSelectedOperation("addition")}
+                      className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-md"
+                      size="sm"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </Button>
+                  </CardContent>
+                </Card>
 
-            <Card
-              className="border-2 hover:border-orange-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-orange-500/30 bg-gradient-to-br from-orange-50/50 to-transparent dark:from-orange-950/30 dark:to-transparent"
-              onClick={() => setSelectedOperation("subtraction")}
-            >
-              <CardHeader className="text-center">
-                <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg shadow-md">
-                    <Minus className="text-white" size={32} />
-                  </div>
-                </div>
-                <CardTitle className="text-orange-700 dark:text-orange-300">Subtraction</CardTitle>
-                <CardDescription>Practice subtracting numbers</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">25 − 12 = ?</p>
-              </CardContent>
-            </Card>
+                <Card className="border-2 hover:border-orange-500/50 transition-all hover:shadow-lg hover:shadow-orange-500/30 bg-gradient-to-br from-orange-50/50 to-transparent dark:from-orange-950/30 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg shadow-md">
+                        <Minus className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-orange-700 dark:text-orange-300">Subtraction</CardTitle>
+                    <CardDescription className="text-xs">Practice subtracting numbers</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      onClick={() => setSelectedOperation("subtraction")}
+                      className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 shadow-md"
+                      size="sm"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </Button>
+                  </CardContent>
+                </Card>
 
-            <Card
-              className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-950/30 dark:to-transparent"
-              onClick={() => setSelectedOperation("multiplication")}
-            >
-              <CardHeader className="text-center">
-                <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
-                    <X className="text-white" size={32} />
-                  </div>
-                </div>
-                <CardTitle className="text-purple-700 dark:text-purple-300">Multiplication</CardTitle>
-                <CardDescription>Practice multiplication tables</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">6 × 7 = ?</p>
-              </CardContent>
-            </Card>
+                <Card className="border-2 hover:border-purple-500/50 transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-950/30 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
+                        <X className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-purple-700 dark:text-purple-300">Multiplication</CardTitle>
+                    <CardDescription className="text-xs">Practice multiplication tables</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      onClick={() => setSelectedOperation("multiplication")}
+                      className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
+                      size="sm"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </Button>
+                  </CardContent>
+                </Card>
 
-            <Card
-              className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/50 to-transparent dark:from-emerald-950/30 dark:to-transparent"
-              onClick={() => setSelectedOperation("division")}
-            >
-              <CardHeader className="text-center">
-                <div className="flex justify-center mb-2">
-                  <div className="p-3 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg shadow-md">
-                    <Divide className="text-white" size={32} />
-                  </div>
-                </div>
-                <CardTitle className="text-emerald-700 dark:text-emerald-300">Division</CardTitle>
-                <CardDescription>Practice division problems</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent">24 ÷ 6 = ?</p>
-              </CardContent>
-            </Card>
+                <Card className="border-2 hover:border-emerald-500/50 transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/50 to-transparent dark:from-emerald-950/30 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg shadow-md">
+                        <Divide className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-emerald-700 dark:text-emerald-300">Division</CardTitle>
+                    <CardDescription className="text-xs">Practice division problems</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      onClick={() => setSelectedOperation("division")}
+                      className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 shadow-md"
+                      size="sm"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* New Homework Types */}
+            <div>
+              <h2 className="text-xl font-semibold mb-3 text-muted-foreground">More Math Practice</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
+                        <Coins className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-purple-700 dark:text-purple-200">Money Problems</CardTitle>
+                    <CardDescription className="text-xs">Count and calculate with money</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      asChild
+                      className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
+                      size="sm"
+                    >
+                      <Link href="/protected/math-homework/money" className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 hover:border-blue-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-500/30 bg-gradient-to-br from-blue-50/40 via-purple-50/30 to-transparent dark:from-blue-950/30 dark:via-purple-950/20 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg shadow-md">
+                        <Clock className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-blue-700 dark:text-blue-200">Time Problems</CardTitle>
+                    <CardDescription className="text-xs">Read clocks and calculate time</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      asChild
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-md"
+                      size="sm"
+                    >
+                      <Link href="/protected/math-homework/time" className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
+                        <Ruler className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-purple-700 dark:text-purple-200">Measurement</CardTitle>
+                    <CardDescription className="text-xs">Convert between units</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      asChild
+                      className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
+                      size="sm"
+                    >
+                      <Link href="/protected/math-homework/measurement" className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-2 hover:border-pink-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-pink-500/30 bg-gradient-to-br from-pink-50/40 via-blue-50/30 to-transparent dark:from-pink-950/30 dark:via-blue-950/20 dark:to-transparent flex flex-col h-full">
+                  <CardHeader className="text-center pb-3">
+                    <div className="flex justify-center mb-3">
+                      <div className="p-2.5 bg-gradient-to-br from-pink-500 to-blue-500 rounded-lg shadow-md">
+                        <Shapes className="text-white" size={24} />
+                      </div>
+                    </div>
+                    <CardTitle className="text-base text-pink-700 dark:text-pink-200">Patterns</CardTitle>
+                    <CardDescription className="text-xs">Recognize number and shape patterns</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 mt-auto">
+                    <Button
+                      asChild
+                      className="w-full bg-gradient-to-r from-pink-600 to-blue-600 hover:from-pink-700 hover:to-blue-700 shadow-md"
+                      size="sm"
+                    >
+                      <Link href="/protected/math-homework/pattern" className="flex items-center justify-center gap-2">
+                        Start
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
         </div>
       </div>

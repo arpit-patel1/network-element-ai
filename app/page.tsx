@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
-import { BookMarked, BookOpen, Calculator, Code2, Home as HomeIcon, Trophy, Globe } from "lucide-react";
+import { BookMarked, BookOpen, Calculator, Code2, Home as HomeIcon, Trophy, Globe, FlaskConical } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -160,6 +160,27 @@ export default function Home() {
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
                     🌍 Countries & capitals • 🗺️ Continents • 💡 Hint questions • 🔍 Reveal answers
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/protected/science-homework">
+              <Card className="hover:border-purple-500/50 transition-all hover:shadow-lg hover:shadow-purple-500/20 h-full bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-950/20 dark:to-transparent">
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
+                      <FlaskConical className="text-white" size={24} />
+                    </div>
+                    <CardTitle className="text-purple-700 dark:text-purple-300">Science Homework</CardTitle>
+                  </div>
+                  <CardDescription>
+                    Learn science facts and test your knowledge with quizzes. Explore animals, space, plants, and weather topics.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    🔬 Science facts • ✅ True/false quizzes • 🔄 Infinite topic cycling • 📚 Multiple topics
                   </p>
                 </CardContent>
               </Card>

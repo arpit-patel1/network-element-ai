@@ -31,7 +31,7 @@ export default function GeographyHomeworkPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Card className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-green-50/30 to-transparent dark:from-emerald-950/30 dark:via-green-950/20 dark:to-transparent">
+          <Card className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-green-50/30 to-transparent dark:from-emerald-950/30 dark:via-green-950/20 dark:to-transparent flex flex-col h-full">
             <CardHeader className="text-center pb-3">
               <div className="flex justify-center mb-3">
                 <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-green-500 rounded-lg shadow-md">
@@ -41,7 +41,7 @@ export default function GeographyHomeworkPage() {
               <CardTitle className="text-base text-emerald-700 dark:text-emerald-200">Country Information</CardTitle>
               <CardDescription className="text-xs">Guess the country from its capital</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="pt-0 mt-auto">
               <Button
                 asChild
                 className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 shadow-md"
@@ -55,7 +55,7 @@ export default function GeographyHomeworkPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-green-50/30 to-transparent dark:from-emerald-950/30 dark:via-green-950/20 dark:to-transparent">
+          <Card className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-green-50/30 to-transparent dark:from-emerald-950/30 dark:via-green-950/20 dark:to-transparent flex flex-col h-full">
             <CardHeader className="text-center pb-3">
               <div className="flex justify-center mb-3">
                 <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-green-500 rounded-lg shadow-md">
@@ -65,7 +65,7 @@ export default function GeographyHomeworkPage() {
               <CardTitle className="text-base text-emerald-700 dark:text-emerald-200">Country-Capital Pair</CardTitle>
               <CardDescription className="text-xs">Guess the capital from the country</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="pt-0 mt-auto">
               <Button
                 asChild
                 className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 shadow-md"
@@ -79,7 +79,7 @@ export default function GeographyHomeworkPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-green-50/30 to-transparent dark:from-emerald-950/30 dark:via-green-950/20 dark:to-transparent">
+          <Card className="border-2 hover:border-emerald-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-emerald-500/30 bg-gradient-to-br from-emerald-50/40 via-green-50/30 to-transparent dark:from-emerald-950/30 dark:via-green-950/20 dark:to-transparent flex flex-col h-full">
             <CardHeader className="text-center pb-3">
               <div className="flex justify-center mb-3">
                 <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-green-500 rounded-lg shadow-md">
@@ -89,7 +89,7 @@ export default function GeographyHomeworkPage() {
               <CardTitle className="text-base text-emerald-700 dark:text-emerald-200">Country-Continent Pair</CardTitle>
               <CardDescription className="text-xs">Guess the continent from the country</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="pt-0 mt-auto">
               <Button
                 asChild
                 className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 shadow-md"

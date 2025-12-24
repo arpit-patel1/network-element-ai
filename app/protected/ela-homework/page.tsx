@@ -31,7 +31,7 @@ export default function ELAHomeworkPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
+          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent flex flex-col h-full">
             <CardHeader className="text-center pb-3">
               <div className="flex justify-center mb-3">
                 <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
@@ -41,7 +41,7 @@ export default function ELAHomeworkPage() {
               <CardTitle className="text-base text-purple-700 dark:text-purple-200">Reading Comprehension</CardTitle>
               <CardDescription className="text-xs">Practice with passages and questions</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="pt-0 mt-auto">
               <Button
                 asChild
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
@@ -55,7 +55,7 @@ export default function ELAHomeworkPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
+          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent flex flex-col h-full">
             <CardHeader className="text-center pb-3">
               <div className="flex justify-center mb-3">
                 <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
@@ -65,7 +65,7 @@ export default function ELAHomeworkPage() {
               <CardTitle className="text-base text-purple-700 dark:text-purple-200">Spelling Test</CardTitle>
               <CardDescription className="text-xs">Practice spelling with random words</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="pt-0 mt-auto">
               <Button
                 asChild
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
@@ -79,7 +79,7 @@ export default function ELAHomeworkPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
+          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent flex flex-col h-full">
             <CardHeader className="text-center pb-3">
               <div className="flex justify-center mb-3">
                 <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
@@ -89,7 +89,7 @@ export default function ELAHomeworkPage() {
               <CardTitle className="text-base text-purple-700 dark:text-purple-200">Paragraph Review</CardTitle>
               <CardDescription className="text-xs">Get feedback on your writing</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="pt-0 mt-auto">
               <Button
                 asChild
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
@@ -103,7 +103,7 @@ export default function ELAHomeworkPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
+          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent flex flex-col h-full">
             <CardHeader className="text-center pb-3">
               <div className="flex justify-center mb-3">
                 <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
@@ -113,7 +113,7 @@ export default function ELAHomeworkPage() {
               <CardTitle className="text-base text-purple-700 dark:text-purple-200">Mario & Luigi Quiz</CardTitle>
               <CardDescription className="text-xs">Test your knowledge with fun quizzes</CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="pt-0 mt-auto">
               <Button
                 asChild
                 className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"

@@ -4,7 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher";
 import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
 import { Suspense } from "react";
-import { BookMarked, BookOpen, Calculator, Code2, Home as HomeIcon, Trophy } from "lucide-react";
+import { BookMarked, BookOpen, Calculator, Code2, Home as HomeIcon, Trophy, Globe } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -139,6 +139,27 @@ export default function Home() {
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
                     🎮 Single player • 🏁 Race to finish • ⚡ Fast & fun • 🎯 All operations
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/protected/geography-homework">
+              <Card className="hover:border-emerald-500/50 transition-all hover:shadow-lg hover:shadow-emerald-500/20 h-full bg-gradient-to-br from-emerald-50/50 to-transparent dark:from-emerald-950/20 dark:to-transparent">
+                <CardHeader>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-2 bg-gradient-to-br from-emerald-500 to-green-500 rounded-lg">
+                      <Globe className="text-white" size={24} />
+                    </div>
+                    <CardTitle className="text-emerald-700 dark:text-emerald-300">Geography Homework</CardTitle>
+                  </div>
+                  <CardDescription>
+                    Practice geography knowledge with countries, capitals, and continents. Learn about the world through interactive questions and answers.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">
+                    🌍 Countries & capitals • 🗺️ Continents • 💡 Hint questions • 🔍 Reveal answers
                   </p>
                 </CardContent>
               </Card>

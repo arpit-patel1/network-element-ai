@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, HelpCircle, Loader2, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { ArrowLeft, HelpCircle, Loader2, Eye, ArrowRight } from "lucide-react";
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -171,24 +171,13 @@ export default function RiddlesPage() {
                     </div>
                   ) : (
                     <Card className="border-2 border-purple-200 dark:border-purple-800 bg-gradient-to-br from-blue-50/50 via-purple-50/30 to-pink-50/30 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20">
-                      <CardHeader className="pb-3">
-                        <div className="flex items-center justify-between gap-2">
-                          <CardTitle className="text-base md:text-lg text-purple-800 dark:text-purple-100">
-                            Answer
-                          </CardTitle>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setShowAnswer(false)}
-                            className="gap-2"
-                          >
-                            <EyeOff className="h-4 w-4" />
-                            <span className="hidden sm:inline">Hide</span>
-                          </Button>
-                        </div>
+                      <CardHeader className="pb-3 text-center">
+                        <CardTitle className="text-base md:text-lg text-purple-800 dark:text-purple-100">
+                          Answer
+                        </CardTitle>
                       </CardHeader>
-                      <CardContent>
-                        <p className="text-lg md:text-xl font-bold text-center break-words">
+                      <CardContent className="text-center">
+                        <p className="text-lg md:text-xl font-bold break-words">
                           <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-500 bg-clip-text text-transparent">
                             {currentRiddle.answer}
                           </span>

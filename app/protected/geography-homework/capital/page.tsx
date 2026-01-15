@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, Globe, Loader2, Eye } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WorldMap } from "@/components/world-map";
 
 interface CapitalResponse {
   country: string;
@@ -176,6 +177,23 @@ export default function CapitalPage() {
             ) : null}
           </CardContent>
         </Card>
+
+        {data && !loading && (
+          <Card className="border-2 border-emerald-200 dark:border-emerald-800 bg-gradient-to-br from-emerald-50/40 via-green-50/30 to-transparent dark:from-emerald-950/30 dark:via-green-950/20 dark:to-transparent overflow-hidden">
+            <CardHeader>
+              <CardTitle className="text-emerald-800 dark:text-emerald-100 flex items-center gap-2">
+                <Globe className="h-5 w-5" />
+                World Map
+              </CardTitle>
+              <CardDescription>The highlighted country is {data.country}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-slate-50 dark:bg-slate-900 rounded-lg overflow-hidden border border-emerald-200/50 dark:border-emerald-800/50">
+                <WorldMap highlightCountry={data.country} className="h-[300px] md:h-[400px]" />
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

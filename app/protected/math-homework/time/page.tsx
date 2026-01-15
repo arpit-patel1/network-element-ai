@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AnalogClock } from "@/components/analog-clock";
 
 interface TimeReadResponse {
   problem: string;
@@ -163,17 +164,14 @@ export default function TimePage() {
                 <div className="rounded-lg border bg-background/70 p-6 shadow-sm">
                   <h2 className="text-2xl md:text-3xl font-semibold leading-8">
                     <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                      {data.problem}
+                      {type === "read" ? "What time is shown on the clock?" : data.problem}
                     </span>
                   </h2>
-                  {readData && (
-                    <div className="mt-4 flex gap-2 items-center">
-                      <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0">
-                        {readData.hour}:{readData.minute.toString().padStart(2, "0")} {readData.period}
-                      </Badge>
-                    </div>
-                  )}
                 </div>
+                
+                {readData && readData.hour !== undefined && readData.minute !== undefined && readData.period && (
+                  <AnalogClock hour={readData.hour} minute={readData.minute} period={readData.period} />
+                )}
 
                 {!isRevealed ? (
                   <div className="flex justify-center">
@@ -194,7 +192,7 @@ export default function TimePage() {
                     <CardContent className="text-center py-6">
                       <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
                         <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                          {data.answer}
+                          {type === "read" ? data.answer.replace(/\s*(AM|PM)$/i, '') : data.answer}
                         </span>
                       </h2>
                     </CardContent>

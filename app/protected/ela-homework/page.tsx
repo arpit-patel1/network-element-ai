@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpenCheck, Sparkles, ArrowRight, SpellCheck, FileText, BookOpen } from "lucide-react";
+import { BookOpenCheck, Sparkles, ArrowRight, SpellCheck, FileText, BookOpen, HelpCircle } from "lucide-react";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -120,6 +120,30 @@ export default function ELAHomeworkPage() {
                 size="sm"
               >
                 <Link href="/protected/ela-homework/mario-luigi-quiz" className="flex items-center justify-center gap-2">
+                  Start
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 hover:border-purple-500/50 cursor-pointer transition-all hover:shadow-lg hover:shadow-purple-500/30 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent flex flex-col h-full">
+            <CardHeader className="text-center pb-3">
+              <div className="flex justify-center mb-3">
+                <div className="p-2.5 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
+                  <HelpCircle className="text-white" size={24} />
+                </div>
+              </div>
+              <CardTitle className="text-base text-purple-700 dark:text-purple-200">Riddles</CardTitle>
+              <CardDescription className="text-xs">Solve fun riddles and reveal answers</CardDescription>
+            </CardHeader>
+            <CardContent className="pt-0 mt-auto">
+              <Button
+                asChild
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md"
+                size="sm"
+              >
+                <Link href="/protected/ela-homework/riddles" className="flex items-center justify-center gap-2">
                   Start
                   <ArrowRight className="w-3 h-3" />
                 </Link>

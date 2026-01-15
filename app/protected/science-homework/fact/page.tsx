@@ -13,25 +13,17 @@ interface FactResponse {
   fact: string;
 }
 
-const topics: Array<"animals" | "space" | "plants" | "weather"> = ["animals", "space", "plants", "weather"];
-
-const getRandomTopic = (): string => {
-  return topics[Math.floor(Math.random() * topics.length)];
-};
-
 export default function ScienceFactPage() {
   const [data, setData] = useState<FactResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const loadFact = async (topic?: string) => {
+  const loadFact = async () => {
     setLoading(true);
     setError(null);
 
-    const selectedTopic = topic || getRandomTopic();
-
     try {
-      const response = await fetch(`/api/science/fact?topic=${encodeURIComponent(selectedTopic)}`, { cache: "no-store" });
+      const response = await fetch("/api/science/fact", { cache: "no-store" });
 
       if (!response.ok) {
         const body = await response.json().catch(() => null);

@@ -72,6 +72,37 @@ export default function TimePage() {
   const calcData = type === "calculate" ? (data as TimeCalculateResponse | null) : null;
   const convertData = type === "convert" ? (data as TimeConvertResponse | null) : null;
 
+  // Convert time to words for read activity
+  const timeToWords = (hour: number, minute: number): string => {
+    const hours = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+    const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    const tens = ["", "", "twenty", "thirty", "forty", "fifty"];
+    
+    const hour12 = hour % 12 || 12;
+    const hourWord = hours[hour12];
+    
+    if (minute === 0) {
+      return `${hourWord} o'clock`;
+    } else if (minute === 15) {
+      return `quarter past ${hourWord}`;
+    } else if (minute === 30) {
+      return `half past ${hourWord}`;
+    } else if (minute === 45) {
+      const nextHour = (hour12 % 12) + 1;
+      return `quarter to ${hours[nextHour]}`;
+    } else if (minute < 10) {
+      return `${hourWord} oh ${ones[minute]}`;
+    } else if (minute < 20) {
+      return `${hourWord} ${teens[minute - 10]}`;
+    } else {
+      const tensDigit = Math.floor(minute / 10);
+      const onesDigit = minute % 10;
+      const minuteWord = onesDigit === 0 ? tens[tensDigit] : `${tens[tensDigit]}-${ones[onesDigit]}`;
+      return `${hourWord} ${minuteWord}`;
+    }
+  };
+
   return (
     <div className="flex-1 w-full flex flex-col gap-8 items-center py-8">
       <div className="w-full max-w-3xl flex flex-col gap-6">
@@ -189,12 +220,17 @@ export default function TimePage() {
                     <CardHeader className="text-center pb-4">
                       <CardTitle className="text-blue-800 dark:text-blue-100 text-lg mb-2">Answer</CardTitle>
                     </CardHeader>
-                    <CardContent className="text-center py-6">
+                    <CardContent className="text-center py-6 space-y-4">
                       <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold">
                         <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                           {type === "read" ? data.answer.replace(/\s*(AM|PM)$/i, '') : data.answer}
                         </span>
                       </h2>
+                      {type === "read" && readData && (
+                        <p className="text-2xl md:text-3xl font-semibold text-muted-foreground capitalize">
+                          {timeToWords(readData.hour, readData.minute)}
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 )}

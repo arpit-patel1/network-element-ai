@@ -10,56 +10,47 @@ import { Badge } from "@/components/ui/badge";
 
 interface QuizQuestion {
   question: string;
+  topic: string;
   type: string;
   answer: string;
   explanation: string;
 }
 
-interface QuizResponse {
-  topic: string;
-  questions: QuizQuestion[];
-}
-
-const topics: Array<"animals" | "space" | "plants" | "weather"> = ["animals", "space", "plants", "weather"];
-
 export default function ScienceQuizPage() {
-  const [quiz, setQuiz] = useState<QuizResponse | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [question, setQuestion] = useState<QuizQuestion | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [topicIndex, setTopicIndex] = useState(0);
 
-  const loadQuiz = async (topic: string) => {
+  const loadQuestion = async () => {
     setLoading(true);
     setError(null);
     setSelectedAnswer(null);
     setFeedback(null);
     setHasSubmitted(false);
-    setCurrentQuestionIndex(0);
 
     try {
-      const response = await fetch(`/api/science/quiz?topic=${encodeURIComponent(topic)}`, { cache: "no-store" });
+      const response = await fetch("/api/science/quiz", { cache: "no-store" });
 
       if (!response.ok) {
         const body = await response.json().catch(() => null);
-        setError(body?.error || "Unable to load a new quiz. Please try again.");
+        setError(body?.error || "Unable to load a new question. Please try again.");
         return;
       }
 
-      const quizData = (await response.json()) as QuizResponse;
-      setQuiz(quizData);
+      const questionData = (await response.json()) as QuizQuestion;
+      setQuestion(questionData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load a new quiz. Please try again.");
+      setError(err instanceof Error ? err.message : "Unable to load a new question. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadQuiz(topics[topicIndex]);
+    loadQuestion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -69,36 +60,18 @@ export default function ScienceQuizPage() {
   };
 
   const handleSubmit = () => {
-    if (!quiz || selectedAnswer === null || hasSubmitted) return;
+    if (!question || selectedAnswer === null || hasSubmitted) return;
     setHasSubmitted(true);
-    const currentQuestion = quiz.questions[currentQuestionIndex];
-    setFeedback(selectedAnswer.toLowerCase() === currentQuestion.answer.toLowerCase() ? "correct" : "incorrect");
+    setFeedback(selectedAnswer.toLowerCase() === question.answer.toLowerCase() ? "correct" : "incorrect");
   };
 
   const handleNext = () => {
-    if (!quiz) return;
-
-    // If we've completed all questions, move to next topic
-    if (currentQuestionIndex >= quiz.questions.length - 1) {
-      const nextTopicIndex = (topicIndex + 1) % topics.length;
-      setTopicIndex(nextTopicIndex);
-      loadQuiz(topics[nextTopicIndex]);
-    } else {
-      // Move to next question in current quiz
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedAnswer(null);
-      setFeedback(null);
-      setHasSubmitted(false);
-    }
+    loadQuestion();
   };
-
-  const currentQuestion = quiz?.questions[currentQuestionIndex];
-  const currentTopic = quiz?.topic || topics[topicIndex];
-  const progress = quiz ? `${currentQuestionIndex + 1} / ${quiz.questions.length}` : "0 / 0";
 
   const feedbackBanner =
     feedback &&
-    currentQuestion &&
+    question &&
     hasSubmitted && (
       <div
         className={`flex items-start gap-3 p-4 rounded-lg border ${
@@ -114,7 +87,7 @@ export default function ScienceQuizPage() {
         )}
         <div className="space-y-1 flex-1">
           <p className="font-semibold">{feedback === "correct" ? "Correct! 🎉" : "Incorrect"}</p>
-          <p className="text-sm">{currentQuestion.explanation}</p>
+          <p className="text-sm">{question.explanation}</p>
         </div>
       </div>
     );
@@ -148,7 +121,7 @@ export default function ScienceQuizPage() {
               </span>
             </h1>
             <p className="text-muted-foreground">
-              Test your knowledge with true/false questions. Topics cycle automatically.
+              Test your knowledge with true/false questions. Topics are selected at random.
             </p>
           </div>
         </div>
@@ -160,7 +133,7 @@ export default function ScienceQuizPage() {
                 <p className="font-semibold text-red-700 dark:text-red-200">Could not load a quiz.</p>
                 <p className="text-sm text-red-600 dark:text-red-300">{error}</p>
               </div>
-              <Button onClick={() => loadQuiz(topics[topicIndex])} variant="outline">
+              <Button onClick={() => loadQuestion()} variant="outline">
                 Retry
               </Button>
             </CardContent>
@@ -179,26 +152,25 @@ export default function ScienceQuizPage() {
                   <CardDescription>Answer true or false.</CardDescription>
                 </div>
               </div>
-              <div className="text-right">
+              {question && (
                 <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0">
-                  {currentTopic.charAt(0).toUpperCase() + currentTopic.slice(1)}
+                  {question.topic.charAt(0).toUpperCase() + question.topic.slice(1)}
                 </Badge>
-                <p className="text-xs text-muted-foreground mt-1">Question {progress}</p>
-              </div>
+              )}
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
             {loading ? (
               <div className="flex flex-col items-center justify-center py-12 gap-4">
                 <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
-                <p className="text-muted-foreground">Loading quiz...</p>
+                <p className="text-muted-foreground">Loading question...</p>
               </div>
-            ) : currentQuestion ? (
+            ) : question ? (
               <>
                 <div className="rounded-lg border bg-background/70 p-6 shadow-sm">
                   <h2 className="text-2xl md:text-3xl font-semibold leading-8">
                     <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-                      {currentQuestion.question}
+                      {question.question}
                     </span>
                   </h2>
                 </div>
@@ -255,11 +227,6 @@ export default function ScienceQuizPage() {
                         <>
                           <Loader2 className="h-4 w-4 animate-spin" />
                           Loading
-                        </>
-                      ) : currentQuestionIndex >= (quiz?.questions.length || 0) - 1 ? (
-                        <>
-                          Next Topic
-                          <ArrowRight className="h-4 w-4" />
                         </>
                       ) : (
                         <>

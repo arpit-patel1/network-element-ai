@@ -2,40 +2,36 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, FlaskConical, Loader2, Eye, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, FlaskConical, Loader2 } from "lucide-react";
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface FactResponse {
   topic: string;
   fact: string;
 }
 
-const topics = ["animals", "space", "plants", "weather"] as const;
-type Topic = (typeof topics)[number];
+const topics: Array<"animals" | "space" | "plants" | "weather"> = ["animals", "space", "plants", "weather"];
+
+const getRandomTopic = (): string => {
+  return topics[Math.floor(Math.random() * topics.length)];
+};
 
 export default function ScienceFactPage() {
   const [data, setData] = useState<FactResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isRevealed, setIsRevealed] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState<Topic>("animals");
 
-  const loadFact = async (topic: Topic) => {
+  const loadFact = async (topic?: string) => {
     setLoading(true);
     setError(null);
-    setIsRevealed(false);
+
+    const selectedTopic = topic || getRandomTopic();
 
     try {
-      const response = await fetch(`/api/science/fact?topic=${encodeURIComponent(topic)}`, { cache: "no-store" });
+      const response = await fetch(`/api/science/fact?topic=${encodeURIComponent(selectedTopic)}`, { cache: "no-store" });
 
       if (!response.ok) {
         const body = await response.json().catch(() => null);
@@ -53,14 +49,9 @@ export default function ScienceFactPage() {
   };
 
   useEffect(() => {
-    loadFact(selectedTopic);
+    loadFact();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleTopicChange = (topic: Topic) => {
-    setSelectedTopic(topic);
-    loadFact(topic);
-  };
 
   return (
     <div className="flex-1 w-full flex flex-col gap-8 items-center py-8">
@@ -91,32 +82,9 @@ export default function ScienceFactPage() {
               </span>
             </h1>
             <p className="text-muted-foreground">
-              Learn interesting science facts. Select a topic and reveal the answer when ready.
+              Learn interesting science facts. Topics are selected at random.
             </p>
           </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-medium">Topic:</span>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="gap-2">
-                {selectedTopic.charAt(0).toUpperCase() + selectedTopic.slice(1)}
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {topics.map((topic) => (
-                <DropdownMenuItem
-                  key={topic}
-                  onClick={() => handleTopicChange(topic)}
-                  className={selectedTopic === topic ? "bg-accent" : ""}
-                >
-                  {topic.charAt(0).toUpperCase() + topic.slice(1)}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
 
         {error && (
@@ -126,7 +94,7 @@ export default function ScienceFactPage() {
                 <p className="font-semibold text-red-700 dark:text-red-200">Could not load a fact.</p>
                 <p className="text-sm text-red-600 dark:text-red-300">{error}</p>
               </div>
-              <Button onClick={() => loadFact(selectedTopic)} variant="outline">
+              <Button onClick={() => loadFact()} variant="outline">
                 Retry
               </Button>
             </CardContent>
@@ -170,7 +138,7 @@ export default function ScienceFactPage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    onClick={() => loadFact(selectedTopic)}
+                    onClick={() => loadFact()}
                     disabled={loading}
                     className="gap-2"
                   >

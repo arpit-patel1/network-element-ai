@@ -101,7 +101,7 @@ export default function PatternPage() {
           </div>
           <div>
             <p className="text-sm uppercase tracking-wide text-pink-600 dark:text-pink-300 font-semibold">
-              Math Homework
+              Math
             </p>
             <h1 className="text-3xl md:text-4xl font-bold">
               <span className="bg-gradient-to-r from-pink-600 via-blue-500 to-pink-500 bg-clip-text text-transparent">

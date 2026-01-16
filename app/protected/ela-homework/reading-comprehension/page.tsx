@@ -111,7 +111,7 @@ export default function ReadingComprehensionPage() {
           </div>
           <div>
             <p className="text-sm uppercase tracking-wide text-purple-600 dark:text-purple-300 font-semibold">
-              ELA Homework
+              ELA
             </p>
             <h1 className="text-3xl md:text-4xl font-bold">
               <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-500 bg-clip-text text-transparent">

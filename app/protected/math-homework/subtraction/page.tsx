@@ -128,7 +128,7 @@ export default function SubtractionHomeworkPage() {
             <div>
               <h1 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-orange-600 via-red-500 to-orange-600 bg-clip-text text-transparent">
-                  Math Homework
+                  Math
                 </span>
               </h1>
               <p className="text-muted-foreground">Practice your subtraction!</p>

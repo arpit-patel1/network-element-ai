@@ -88,7 +88,7 @@ export default function Home() {
                     <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
                       <BookMarked className="text-white" size={24} />
                     </div>
-                    <CardTitle className="text-pink-700 dark:text-pink-200">ELA Homework</CardTitle>
+                    <CardTitle className="text-pink-700 dark:text-pink-200">ELA</CardTitle>
                   </div>
                   <CardDescription>
                     Reading comprehension practice powered by n8n. Get passages, answer questions, and receive instant feedback.
@@ -109,7 +109,7 @@ export default function Home() {
                     <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg">
                       <Calculator className="text-white" size={24} />
                     </div>
-                    <CardTitle className="text-blue-700 dark:text-blue-300">Math Homework</CardTitle>
+                    <CardTitle className="text-blue-700 dark:text-blue-300">Math</CardTitle>
                   </div>
                   <CardDescription>
                     Interactive math practice with addition, subtraction, multiplication, and division. Multiple difficulty levels with instant feedback!
@@ -151,7 +151,7 @@ export default function Home() {
                     <div className="p-2 bg-gradient-to-br from-emerald-500 to-green-500 rounded-lg">
                       <Globe className="text-white" size={24} />
                     </div>
-                    <CardTitle className="text-emerald-700 dark:text-emerald-300">Geography Homework</CardTitle>
+                    <CardTitle className="text-emerald-700 dark:text-emerald-300">Geography</CardTitle>
                   </div>
                   <CardDescription>
                     Practice geography knowledge with countries, capitals, and continents. Learn about the world through interactive questions and answers.
@@ -172,7 +172,7 @@ export default function Home() {
                     <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
                       <FlaskConical className="text-white" size={24} />
                     </div>
-                    <CardTitle className="text-purple-700 dark:text-purple-300">Science Homework</CardTitle>
+                    <CardTitle className="text-purple-700 dark:text-purple-300">Science</CardTitle>
                   </div>
                   <CardDescription>
                     Learn science facts and test your knowledge with quizzes. Explore animals, space, plants, and weather topics.

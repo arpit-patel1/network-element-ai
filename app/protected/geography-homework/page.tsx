@@ -15,12 +15,12 @@ export default function GeographyHomeworkPage() {
           </div>
           <div className="space-y-2">
             <Badge className="bg-gradient-to-r from-emerald-500 to-green-500 text-white border-0 shadow-md">
-              Geography Homework
+              Geography
             </Badge>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold">
                 <span className="bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-500 bg-clip-text text-transparent">
-                  Geography Homework
+                  Geography
                 </span>
               </h1>
               <p className="text-muted-foreground">

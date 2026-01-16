@@ -108,7 +108,7 @@ export default function DivisionHomeworkPage() {
             <div>
               <h1 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-600 bg-clip-text text-transparent">
-                  Math Homework
+                  Math
                 </span>
               </h1>
               <p className="text-muted-foreground">Practice your division!</p>

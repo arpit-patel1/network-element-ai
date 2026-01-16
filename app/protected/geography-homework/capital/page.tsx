@@ -71,7 +71,7 @@ export default function CapitalPage() {
           </div>
           <div>
             <p className="text-sm uppercase tracking-wide text-emerald-600 dark:text-emerald-300 font-semibold">
-              Geography Homework
+              Geography
             </p>
             <h1 className="text-3xl md:text-4xl font-bold">
               <span className="bg-gradient-to-r from-emerald-600 via-green-500 to-emerald-500 bg-clip-text text-transparent">

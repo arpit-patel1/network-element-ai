@@ -211,7 +211,7 @@ export default function MathHomeworkPage() {
             <div>
               <h1 className="text-3xl md:text-4xl font-bold">
                 <span className="bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
-                  Math Homework
+                  Math
                 </span>
               </h1>
               <p className="text-muted-foreground">Choose a type of practice</p>
@@ -321,7 +321,7 @@ export default function MathHomeworkPage() {
               </div>
             </div>
 
-            {/* New Homework Types */}
+            {/* More Math Practice */}
             <div>
               <h2 className="text-xl font-semibold mb-3 text-muted-foreground">More Math Practice</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -472,7 +472,7 @@ export default function MathHomeworkPage() {
             <div>
               <h1 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
-                  Math Homework
+                  Math
                 </span>
               </h1>
               <p className="text-muted-foreground">Practice your {getOperationName()}!</p>

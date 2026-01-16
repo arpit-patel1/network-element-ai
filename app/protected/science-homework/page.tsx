@@ -15,12 +15,12 @@ export default function ScienceHomeworkPage() {
           </div>
           <div className="space-y-2">
             <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 shadow-md">
-              Science Homework
+              Science
             </Badge>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold">
                 <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-500 bg-clip-text text-transparent">
-                  Science Homework
+                  Science
                 </span>
               </h1>
               <p className="text-muted-foreground">

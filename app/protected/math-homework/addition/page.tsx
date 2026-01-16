@@ -108,7 +108,7 @@ export default function AdditionHomeworkPage() {
             <div>
               <h1 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent">
-                  Math Homework
+                  Math
                 </span>
               </h1>
               <p className="text-muted-foreground">Practice your addition!</p>

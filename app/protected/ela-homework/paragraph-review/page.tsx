@@ -82,7 +82,7 @@ export default function ParagraphReviewPage() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs md:text-sm uppercase tracking-wide text-purple-600 dark:text-purple-300 font-semibold">
-              ELA Homework
+              ELA
             </p>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">
               <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-purple-500 bg-clip-text text-transparent">

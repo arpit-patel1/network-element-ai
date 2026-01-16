@@ -21,7 +21,7 @@ export default function JokesPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPunchline, setShowPunchline] = useState(false);
-  const [jokeType, setJokeType] = useState<"chuck-norris" | "dad-joke" | "random-joke">("chuck-norris");
+  const [jokeType, setJokeType] = useState<"chuck-norris" | "dad-joke" | "random-joke">("random-joke");
 
   const loadJoke = async (type: "chuck-norris" | "dad-joke" | "random-joke") => {
     setLoading(true);

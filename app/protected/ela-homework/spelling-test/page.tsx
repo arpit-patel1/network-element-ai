@@ -131,7 +131,7 @@ export default function SpellingTestPage() {
                 <p className="font-semibold text-sm md:text-base text-red-700 dark:text-red-200">Could not load a word.</p>
                 <p className="text-xs md:text-sm text-red-600 dark:text-red-300 break-words">{error}</p>
               </div>
-              <Button onClick={loadWord} variant="outline" size="sm" className="shrink-0">
+              <Button onClick={() => loadWord(selectedDifficulty)} variant="outline" size="sm" className="shrink-0">
                 Retry
               </Button>
             </CardContent>

@@ -1,55 +1,35 @@
 import { NextResponse } from "next/server";
 import words from "an-array-of-english-words";
 
-// Cache filtered word lists in memory
-let easyWords: string[] | null = null;
-let mediumWords: string[] | null = null;
-let hardWords: string[] | null = null;
+// Length ranges for each difficulty level
+const LENGTH_RANGES = {
+  easy: [3, 4, 5],
+  medium: [6, 7, 8],
+  hard: [9, 10, 11, 12],
+};
 
-function getFilteredWords() {
-  if (!easyWords || !mediumWords || !hardWords) {
-    easyWords = words.filter((word) => word.length >= 3 && word.length <= 5);
-    mediumWords = words.filter((word) => word.length >= 6 && word.length <= 8);
-    hardWords = words.filter((word) => word.length >= 9);
-  }
-  return { easyWords, mediumWords, hardWords };
+// Get a random length from the difficulty range
+function getRandomLength(difficulty: "easy" | "medium" | "hard"): number {
+  const range = LENGTH_RANGES[difficulty];
+  return range[Math.floor(Math.random() * range.length)];
 }
 
-// Determine difficulty based on word length
-function determineWordDifficulty(word: string): "easy" | "medium" | "hard" {
-  if (word.length <= 5) return "easy";
-  if (word.length <= 8) return "medium";
-  return "hard";
-}
-
-// Get a word from the local array with optional difficulty filter
-function getLocalWord(requestedDifficulty?: string | null): { word: string; difficulty: "easy" | "medium" | "hard" } {
-  const { easyWords, mediumWords, hardWords } = getFilteredWords();
-
-  let selectedWord: string;
-  let difficulty: "easy" | "medium" | "hard";
-
-  if (requestedDifficulty && ["easy", "medium", "hard"].includes(requestedDifficulty)) {
-    // User requested specific difficulty
-    difficulty = requestedDifficulty as "easy" | "medium" | "hard";
-    const wordList =
-      difficulty === "easy" ? easyWords : difficulty === "medium" ? mediumWords : hardWords;
-    selectedWord = wordList[Math.floor(Math.random() * wordList.length)];
-  } else {
-    // Mixed difficulty - randomly select difficulty level
-    const randomDifficulty = Math.random();
-    if (randomDifficulty < 0.33) {
-      difficulty = "easy";
-      selectedWord = easyWords[Math.floor(Math.random() * easyWords.length)];
-    } else if (randomDifficulty < 0.66) {
-      difficulty = "medium";
-      selectedWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
-    } else {
-      difficulty = "hard";
-      selectedWord = hardWords[Math.floor(Math.random() * hardWords.length)];
-    }
+// Get a word from the local array with specific length
+function getLocalWord(difficulty: "easy" | "medium" | "hard", targetLength?: number): { word: string; difficulty: "easy" | "medium" | "hard" } {
+  const length = targetLength || getRandomLength(difficulty);
+  
+  // Filter words by exact length
+  const filteredWords = words.filter((word) => word.length === length);
+  
+  if (filteredWords.length === 0) {
+    // Fallback to any word in the difficulty range if no exact match
+    const range = LENGTH_RANGES[difficulty];
+    const fallbackWords = words.filter((word) => word.length >= range[0] && word.length <= range[range.length - 1]);
+    const selectedWord = fallbackWords[Math.floor(Math.random() * fallbackWords.length)];
+    return { word: selectedWord, difficulty };
   }
-
+  
+  const selectedWord = filteredWords[Math.floor(Math.random() * filteredWords.length)];
   return { word: selectedWord, difficulty };
 }
 
@@ -57,10 +37,18 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const difficultyParam = searchParams.get("difficulty");
+    
+    // Default to medium if no difficulty specified
+    const difficulty = (difficultyParam && ["easy", "medium", "hard"].includes(difficultyParam) 
+      ? difficultyParam 
+      : "medium") as "easy" | "medium" | "hard";
 
-    // Try Random Word API first
+    // Get a random length for this difficulty
+    const randomLength = getRandomLength(difficulty);
+
+    // Try Random Word API first with length parameter
     try {
-      const response = await fetch("https://random-word-api.herokuapp.com/word", {
+      const response = await fetch(`https://random-word-api.herokuapp.com/word?length=${randomLength}`, {
         cache: "no-store",
         signal: AbortSignal.timeout(5000), // 5 second timeout
       });
@@ -70,17 +58,9 @@ export async function GET(request: Request) {
         const word = Array.isArray(data) ? data[0] : data;
         
         if (word && typeof word === "string") {
-          const determinedDifficulty = determineWordDifficulty(word);
-
-          // If user requested specific difficulty and word doesn't match, use local fallback
-          if (difficultyParam && determinedDifficulty !== difficultyParam) {
-            const localResult = getLocalWord(difficultyParam);
-            return NextResponse.json(localResult);
-          }
-
           return NextResponse.json({
             word,
-            difficulty: determinedDifficulty,
+            difficulty,
           });
         }
       }
@@ -90,7 +70,7 @@ export async function GET(request: Request) {
     }
 
     // Use local array as fallback
-    const localResult = getLocalWord(difficultyParam);
+    const localResult = getLocalWord(difficulty, randomLength);
     return NextResponse.json(localResult);
   } catch (error) {
     return NextResponse.json(

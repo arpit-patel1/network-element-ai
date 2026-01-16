@@ -7,6 +7,7 @@ import { ArrowLeft, SpellCheck, Loader2, BookOpen, ArrowRight, Info, X } from "l
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface WordResponse {
   word: string;
@@ -20,6 +21,7 @@ interface WordExplanation {
 }
 
 export default function SpellingTestPage() {
+  const [selectedDifficulty, setSelectedDifficulty] = useState<"easy" | "medium" | "hard">("medium");
   const [currentWord, setCurrentWord] = useState<WordResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,14 +29,14 @@ export default function SpellingTestPage() {
   const [explanationLoading, setExplanationLoading] = useState(false);
   const [explanationError, setExplanationError] = useState<string | null>(null);
 
-  const loadWord = async () => {
+  const loadWord = async (difficulty: "easy" | "medium" | "hard") => {
     setLoading(true);
     setError(null);
     setExplanation(null);
     setExplanationError(null);
 
     try {
-      const response = await fetch("/api/ela/spelling-test", { cache: "no-store" });
+      const response = await fetch(`/api/ela/spelling-test?difficulty=${difficulty}`, { cache: "no-store" });
 
       if (!response.ok) {
         const body = await response.json().catch(() => null);
@@ -83,31 +85,9 @@ export default function SpellingTestPage() {
   };
 
   useEffect(() => {
-    loadWord();
+    loadWord(selectedDifficulty);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getDifficultyColor = (difficulty: "easy" | "medium" | "hard") => {
-    switch (difficulty) {
-      case "easy":
-        return "bg-green-500";
-      case "medium":
-        return "bg-yellow-500";
-      case "hard":
-        return "bg-red-500";
-    }
-  };
-
-  const getDifficultyLabel = (difficulty: "easy" | "medium" | "hard") => {
-    switch (difficulty) {
-      case "easy":
-        return "Easy";
-      case "medium":
-        return "Medium";
-      case "hard":
-        return "Hard";
-    }
-  };
+  }, [selectedDifficulty]);
 
   return (
     <div className="flex-1 w-full flex flex-col gap-6 md:gap-8 items-center py-4 md:py-8 px-4">
@@ -160,8 +140,8 @@ export default function SpellingTestPage() {
 
         {/* Word Card */}
         <Card className="border-2 bg-gradient-to-br from-purple-50/40 via-pink-50/30 to-transparent dark:from-purple-950/30 dark:via-pink-950/20 dark:to-transparent">
-          <CardHeader className="space-y-3">
-            <div className="flex items-center gap-3">
+          <CardHeader>
+            <div className="flex items-center gap-3 mb-4">
               <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-md">
                 <SpellCheck className="text-white" size={22} />
               </div>
@@ -170,15 +150,21 @@ export default function SpellingTestPage() {
                 <CardDescription>Read this word aloud for students to write on their notepad.</CardDescription>
               </div>
             </div>
-            {currentWord && (
-              <div className="flex items-center gap-2">
-                <Badge
-                  className={`${getDifficultyColor(currentWord.difficulty)} text-white border-0`}
-                >
-                  {getDifficultyLabel(currentWord.difficulty)}
-                </Badge>
-              </div>
-            )}
+            
+            {/* Difficulty Selector */}
+            <Tabs value={selectedDifficulty} onValueChange={(value) => setSelectedDifficulty(value as "easy" | "medium" | "hard")}>
+              <TabsList className="w-full grid grid-cols-3">
+                <TabsTrigger value="easy" className="text-sm md:text-base">
+                  Easy
+                </TabsTrigger>
+                <TabsTrigger value="medium" className="text-sm md:text-base">
+                  Medium
+                </TabsTrigger>
+                <TabsTrigger value="hard" className="text-sm md:text-base">
+                  Hard
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </CardHeader>
           <CardContent className="space-y-4 md:space-y-6">
             {loading ? (
@@ -276,7 +262,7 @@ export default function SpellingTestPage() {
                 <div className="flex justify-center gap-3 pt-2 md:pt-4">
                   <Button
                     size="lg"
-                    onClick={loadWord}
+                    onClick={() => loadWord(selectedDifficulty)}
                     disabled={loading}
                     className="w-full sm:w-auto px-6 md:px-8 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-md gap-2 text-sm md:text-base"
                   >
